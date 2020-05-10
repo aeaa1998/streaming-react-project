@@ -9,7 +9,7 @@ export default class SplashScreen extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => (this.props.navigation.navigate('Login')), 1000);
+        setTimeout(() => (this.props.navigation.navigate('Auth')), 1000);
     }
     render() {
 

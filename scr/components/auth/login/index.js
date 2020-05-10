@@ -1,46 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React from 'react';
-
+import React, { useState } from 'react';
+import { ProgressLoader } from '../../utils/Loaders/ProgressLoader'
 const image = { uri: "https://recoverit.wondershare.com/images/article/07/iphone-wallpapers-27.jpg" };
 import { connect } from 'react-redux';
 import { View, Text, Dimensions, ImageBackground, StyleSheet, TextInput, Button } from "react-native";
-const LoginView = ({ navigation }) => {
+import * as actions from '../../../actions/auth';
+import * as selectors from '../../../reducers';
+import LoginForm from './LoginForm'
+
+const LoginView = ({ navigation, onSubmit, isLoading }) => {
     const { width, height } = Dimensions.get('window');
+    const [username, changeUsername] = useState('');
+    const [password, changePassword] = useState('');
     return (
         <View style={styles.container, { height: height }}>
             <ImageBackground source={image} style={styles.image}>
+                <ProgressLoader loadingLabel="Ingresando" visible={isLoading} />
                 <View style={styles.card}>
-                    <View style={{ flexDirection: "column", flex: 1 }}>
-                        <Text style={{ fontSize: 28, textAlign: "center" }} >Login</Text>
-                        <View style={{ flex: 0.3, marginTop: 32 }} >
-                            <Text style={{ fontSize: 16, textAlign: "left" }} >Usuario</Text>
-                            <TextInput placeholder="Ingrese su usuario" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 0.3, marginTop: 16 }} >
-                            <Text style={{ fontSize: 16, textAlign: "left" }} >Contraseña</Text>
-                            <TextInput secureTextEntry={true} placeholder="Ingrese su contraseña" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 0.3 }}>
-                            <View style={{ marginTop: 32 }} >
-                                <Button
-                                    title="Iniciar Sesion"
-                                    color="#841584"
-                                />
-                            </View>
-                            <View style={{ marginTop: 16 }} >
-                                <Button
-                                    onPress={() => navigation.push('Register')}
-                                    title="Registrarse"
-                                    color="#841584"
-                                />
-                            </View>
-                        </View>
-
-                    </View>
-
+                    <LoginForm navigation={navigation} onSubmit={onSubmit} />
                 </View>
             </ImageBackground>
         </View >
@@ -76,4 +54,17 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginView
+export default connect(
+    state => ({
+        isLoading: selectors.getIsAuthenticating(state),
+        //   error: selectors.getAuthenticatingError(state),
+        //   isAuthenticated: selectors.isAuthenticated(state),
+        //   authUsername: selectors.getAuthUsername(state),
+    }),
+    dispatch => ({
+        onSubmit(username, password) {
+            dispatch(actions.startLogin(username, password));
+        },
+    }))(
+        LoginView
+    );

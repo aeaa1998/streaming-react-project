@@ -42,7 +42,7 @@ const RegisterView = ({ navigation }) => {
                             </View>
                             <View style={{ marginTop: 16 }} >
                                 <Button
-                                    onPress={() => navigation.goBack()}
+                                    onPress={() => navigation.navigate('Login')}
                                     title="Volver"
                                     color="#841584"
                                 />

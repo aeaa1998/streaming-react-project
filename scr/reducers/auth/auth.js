@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import jwtDecode from 'jwt-decode';
-import { combineReducers } from 'redux-native';
+import { combineReducers } from 'redux';
 
-import * as types from '../types/auth';
+import * as types from '../../types/auth';
 
 const token = (state = null, action) => {
     switch (action.type) {
@@ -58,27 +58,23 @@ const isAuthenticating = (state = false, action) => {
     return state;
 };
 
-const error = (state = null, action) => {
+const isRegistering = (state = false, action) => {
     switch (action.type) {
-        case types.AUTHENTICATION_STARTED: {
-            return null;
+        case types.REGISTRATION_STARTED: {
+            return true;
         }
-        case types.AUTHENTICATION_COMPLETED: {
-            return null;
-        }
-        case types.AUTHENTICATION_FAILED: {
-            return action.payload.error;
+        default: {
+            return false;
         }
     }
-
-    return state;
 };
+
+
 
 const auth = combineReducers({
     token,
     decoded,
     isAuthenticating,
-    error,
 });
 
 export default auth;
