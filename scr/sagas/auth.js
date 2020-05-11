@@ -13,62 +13,50 @@ import {
 import * as selectors from '../reducers';
 import * as actions from '../actions/auth';
 import * as types from '../types/auth';
+import { create, handleResponse } from '../components/utils/Api'
+import * as NavigationService from '../services/navigator'
 
 
-const API_BASE_URL = 'http://localhost:8000/api';
 
 
 function* login(action) {
     try {
-        const response = yield call(
-            fetch,
-            `${API_BASE_URL}/token-auth/`,
-            {
-                method: 'POST',
-                body: JSON.stringify(action.payload),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            },
-        );
 
-        // if (response.status >= 200 && response.status <= 299) {
-        //     const { token } = yield response.json();
-        //     yield put(actions.failLogin('Falló horrible la conexión mano'));
-        //     // yield put(actions.completeLogin(token));
-        // } else {
-        //     const { non_field_errors } = yield response.json();
-        //     yield put(actions.failLogin(non_field_errors[0]));
-        // }
+        const response = yield call(create, { url: 'login/', data: action.payload }, false)
+        const token = yield select(selectors.getAuthToken);
+        if (response.status >= 200 && response.status <= 299) {
+            const { token } = yield response.json();
+            yield put(actions.completeLogin(token));
+            const navigator = yield select(selectors.getRootNavigator)
+            navigator.navigate('App');
+
+        } else {
+
+            acceptDialog("Error", "Credenciales invalidas")
+            yield put(actions.failLogin());
+        }
     } catch (error) {
         console.log(error)
-        acceptDialog()
+        acceptDialog("Error", "No se ha podido ingresar sesión")
         yield put(actions.failLogin());
     }
 }
 
 function* register(action) {
     try {
-        const response = yield call(
-            fetch,
-            `${API_BASE_URL}/register/`,
-            {
-                method: 'POST',
-                body: JSON.stringify({ email: action.payload.username, password: action.payload.password }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            },
-        );
+
+        const response = yield call(create, { url: 'register/', data: action.payload }, false)
 
         if (response.status >= 200 && response.status <= 299) {
             const { data } = yield response.json();
+            NavigationService.navigate('Login');
             yield put(actions.registerSucceded());
         } else {
-            const { non_field_errors } = yield response.json();
+            acceptDialog("Error", `El usuario ${action.payload.username} ya ha sido tomado`)
             yield put(actions.registerFailed());
         }
     } catch (error) {
+        acceptDialog("Error", "No se ha podido registrar el usuario")
         yield put(actions.registerFailed());
     }
 }

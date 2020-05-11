@@ -3,13 +3,14 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
 import { View, Text } from "react-native";
-export default class SplashScreen extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+import { connect } from 'react-redux';
+import * as selectors from '../../../reducers';
+import * as actions from '../../../actions/navigators'
+class SplashScreen extends React.Component {
 
     componentDidMount() {
-        setTimeout(() => (this.props.navigation.navigate('Auth')), 1000);
+        this.props.setNavigation(this.props.navigation)
+        setTimeout(() => (this.props.navigation.navigate(this.props.token ? 'App' : 'Auth')), 1000);
     }
     render() {
 
@@ -29,3 +30,27 @@ export default class SplashScreen extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        token: selectors.getAuthToken(state),
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setNavigation: navigator => {
+            dispatch(actions.startPutRootNavigation())
+            try {
+                dispatch(actions.completeSetRootNavigator(navigator))
+            } catch{
+                dispatch(actions.failedSetRootNavigator())
+            }
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SplashScreen);

@@ -22,10 +22,10 @@ export const logout = () => ({
     type: types.AUTHENTICATION_IDENTITY_CLEARED,
 });
 
-export const registerStarted = (username, password) => (
+export const registerStarted = (payload) => (
     {
         type: types.REGISTRATION_STARTED,
-        payload: { username, password },
+        payload: payload,
     }
 );
 

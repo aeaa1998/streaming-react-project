@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Alert } from 'react-native';
-export const acceptDialog = () =>
+export const acceptDialog = (title, message, okCallbak = () => { }) =>
     Alert.alert(
-        'Error',
-        'No se ha podido ingresar sesion',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        title,
+        message,
+        [{ text: 'OK', onPress: () => okCallbak() }],
         { cancelable: false },
     );

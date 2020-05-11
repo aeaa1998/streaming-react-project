@@ -2,14 +2,11 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
-import * as actions from '../../../actions/auth';
 import { View, Text, Button, TextInput } from "react-native";
 import { Field, reduxForm, reset } from 'redux-form';
 const isRequired = value => value ? undefined : 'Este campo es obligatorio'
-const afterSubmit = (result, dispatch) => dispatch(reset('login-form'))
-let LoginForm = ({ navigation, isLoading, ...props }) => {
-    const formStates = ['asyncValidating', 'dirty', 'pristine', 'valid', 'invalid', 'submitting',
-        'submitSucceeded', 'submitFailed'];
+const afterSubmit = (result, dispatch) => dispatch(reset('register-form'))
+let Registerform = ({ navigation, ...props }) => {
     return (
         <View style={{ flexDirection: "column", flex: 1 }}>
             <Text style={{ fontSize: 28, textAlign: 'center' }}>Login</Text>
@@ -17,7 +14,7 @@ let LoginForm = ({ navigation, isLoading, ...props }) => {
                 <Text style={{ fontSize: 16, textAlign: "left" }} >Ususario</Text>
                 <Field
                     validate={[isRequired]}
-                    name='username'
+                    name={'username'}
                     placeholder="Ingrese su usuario"
                     style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
                     component={TextInput}
@@ -27,7 +24,7 @@ let LoginForm = ({ navigation, isLoading, ...props }) => {
                 <Text style={{ fontSize: 16, textAlign: "left" }} >Contraseña</Text>
                 <Field
                     validate={[isRequired]}
-                    name='password'
+                    name={'password'}
                     style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
                     placeholder="Ingrese su contraseña"
                     component={TextInput}
@@ -37,7 +34,7 @@ let LoginForm = ({ navigation, isLoading, ...props }) => {
             <View style={{ flex: 0.3 }}>
                 <View style={{ marginTop: 32 }}>
                     <Button
-                        disabled={props.submitting || isLoading}
+                        disabled={props.invalid || props.submitting}
                         onPress={props.handleSubmit}
                         title="Iniciar Sesion"
                         color="#841584"
@@ -45,7 +42,7 @@ let LoginForm = ({ navigation, isLoading, ...props }) => {
                 </View>
                 <View style={{ marginTop: 16 }}>
                     <Button
-                        disabled={props.submitting || isLoading}
+                        disabled={props.submitting}
                         onPress={() => navigation.navigate('Register')}
                         title="Registrarse"
                         color="#841584"
@@ -57,9 +54,9 @@ let LoginForm = ({ navigation, isLoading, ...props }) => {
 }
 
 
-LoginForm = reduxForm({
-    form: 'login-form',
+Registerform = reduxForm({
+    form: 'register-form',
     onSubmitSuccess: afterSubmit,
-})(LoginForm)
+})(Registerform)
 
-export default LoginForm
+export default Registerform
