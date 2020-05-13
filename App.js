@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { configureStore } from './scr/store';
-import AuthNavigator from './scr/components/auth/navigation/auth';
+import AuthNavigator from './scr/components/auth/navigation';
 import SplashScreen from "./scr/components/utils/splashscreen";
 import { PersistGate } from 'redux-persist/integration/react';
 import AppNavigator from './scr/components/navigation'

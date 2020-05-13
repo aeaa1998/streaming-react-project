@@ -5,7 +5,7 @@
 import { acceptDialog } from '../../utils/Alerts'
 import React, { useState } from 'react';
 import * as actions from '../../../actions/auth';
-const image = { uri: 'https://recoverit.wondershare.com/images/article/07/iphone-wallpapers-27.jpg' };
+const image = { uri: 'https://i.imgur.com/UuDQFWd.jpg' };
 import { connect } from 'react-redux';
 import { View, Text, Dimensions, ImageBackground, StyleSheet, TextInput, Button } from 'react-native';
 import { ProgressLoader } from '../../utils/Loaders/ProgressLoader'
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     card: {
         flex: 0.9,
         borderRadius: 12,
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
         marginVertical: 12,
         marginHorizontal: 24,
         padding: 16,

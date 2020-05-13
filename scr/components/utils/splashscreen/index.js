@@ -2,10 +2,11 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import LottieView from 'lottie-react-native';
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import * as selectors from '../../../reducers';
 import * as actions from '../../../actions/navigators'
+const { height, width } = Dimensions.get('window')
 class SplashScreen extends React.Component {
 
     componentDidMount() {
@@ -15,25 +16,39 @@ class SplashScreen extends React.Component {
     render() {
 
         return (
-            <View
-                style={{ flex: 1, flexDirection: 'column', padding: 20 }}>
+            <ImageBackground source={{ uri: 'https://wallpaperaccess.com/full/423515.jpg' }} style={styles.image}>
+                <Text
+                    style={{ flex: 0.3, fontSize: 56, color: 'white', textAlign: 'center', textAlignVertical: 'center' }}
+                >STRME</Text>
                 <LottieView
-                    style={{
-                        flex: 0.67,
-                    }}
                     source={require('../../../assets/lottie/splashScreen.json')}
                     autoPlay
                     loop
+                    style={{
+                        height: height * 0.3,
+                        alignSelf: 'center'
+                    }}
+                    resizeMode='contain'
                 />
-                <Text style={{ flex: 0.3, fontSize: 40, color: 'white', textAlign: 'center' }}>Streaming</Text>
-            </ View>
+
+            </ImageBackground>
+
         );
     }
 }
+const styles = StyleSheet.create({
+    image: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'flex-start',
+    },
+
+});
 
 function mapStateToProps(state) {
     return {
         token: selectors.getAuthToken(state),
+        tokenDecoded: selectors.getAuthDecoded(state),
     }
 }
 

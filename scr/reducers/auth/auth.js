@@ -16,7 +16,7 @@ const token = (state = null, action) => {
             return null;
         }
         case types.AUTHENTICATION_IDENTITY_CLEARED: {
-            return null;
+            return state;
         }
     }
 
@@ -90,3 +90,4 @@ export const getAuthExpiration = (state) =>
     state.decoded ? state.decoded.exp : null;
 export const getAuthUsername = (state) =>
     state.decoded ? state.decoded.username : null;
+export const getAuthDecoded = (state) => state.decoded

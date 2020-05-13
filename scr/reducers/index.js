@@ -27,6 +27,7 @@ export const isAuthenticated = state => getAuthToken(state) != null;
 export const getAuthUserID = state => authSelectors.getAuthUserID(state.auth);
 export const getAuthExpiration = state => authSelectors.getAuthExpiration(state.auth);
 export const getAuthUsername = state => authSelectors.getAuthUsername(state.auth);
+export const getAuthDecoded = state => authSelectors.getAuthDecoded(state.auth);
 
 //Nav Getters
 export const getRootNavigator = state => navSelectors.getRootNavigator(state.navigators);
