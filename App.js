@@ -9,11 +9,13 @@ import AuthNavigator from './scr/components/auth/navigation';
 import SplashScreen from "./scr/components/utils/splashscreen";
 import { PersistGate } from 'redux-persist/integration/react';
 import AppNavigator from './scr/components/navigation'
-
-import * as NavigationService from './scr/services/navigator'
+import computedShapes from './scr/styles/computedShapes'
+import alerts from './scr/components/utils/Alerts'
 // create switch navigation with authentication flow and main app
 // [fragmento , ]
 export const { store, persistor } = configureStore();
+global.computedShapes = computedShapes
+global.alerts = alerts
 const SwitchNavigator = createSwitchNavigator(
   {
     Splash: SplashScreen,
@@ -27,9 +29,6 @@ const SwitchNavigator = createSwitchNavigator(
 
 const AppNav = createAppContainer(SwitchNavigator);
 export default class App extends Component {
-  componentDidMount() {
-    NavigationService.setNavigator(this.navigator);
-  }
   render() {
     return (<Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

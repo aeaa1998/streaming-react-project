@@ -20,3 +20,5 @@ export const decisionDialog = (title, message, okCallbak = () => { }) =>
         ],
         { cancelable: true },
     );
+
+export default { acceptDialog, decisionDialog }

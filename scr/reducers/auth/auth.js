@@ -16,7 +16,7 @@ const token = (state = null, action) => {
             return null;
         }
         case types.AUTHENTICATION_IDENTITY_CLEARED: {
-            return state;
+            return null;
         }
     }
 

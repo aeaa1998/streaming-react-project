@@ -12,31 +12,29 @@ import {
 
 import * as selectors from '../reducers';
 import * as actions from '../actions/auth';
+import * as profileActions from '../actions/profile'
 import * as types from '../types/auth';
 import { create, handleResponse } from '../components/utils/Api'
-import * as NavigationService from '../services/navigator'
 
 
 
 
 function* login(action) {
     try {
-
         const response = yield call(create, { url: 'login/', data: action.payload }, false)
-        const token = yield select(selectors.getAuthToken);
         if (response.status >= 200 && response.status <= 299) {
-            const { token } = yield response.json();
+            //http response = response
+            //data = .json()
+            const { token, payload } = yield response.json();
             yield put(actions.completeLogin(token));
+            yield put(profileActions.completeFetchUserProfile(payload.profile));
             const navigator = yield select(selectors.getRootNavigator)
             navigator.navigate('App');
-
         } else {
-
             acceptDialog("Error", "Credenciales invalidas")
             yield put(actions.failLogin());
         }
     } catch (error) {
-        console.log(error)
         acceptDialog("Error", "No se ha podido ingresar sesión")
         yield put(actions.failLogin());
     }
@@ -44,12 +42,12 @@ function* login(action) {
 
 function* register(action) {
     try {
-
+        const navigator = yield select(selectors.getRootNavigator)
         const response = yield call(create, { url: 'register/', data: action.payload }, false)
 
         if (response.status >= 200 && response.status <= 299) {
             const { data } = yield response.json();
-            NavigationService.navigate('Login');
+            navigator.navigate('Login');
             yield put(actions.registerSucceded());
         } else {
             acceptDialog("Error", `El usuario ${action.payload.username} ya ha sido tomado`)

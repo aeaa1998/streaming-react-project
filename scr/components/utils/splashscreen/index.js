@@ -6,12 +6,17 @@ import { View, Text, StyleSheet, ImageBackground, Dimensions } from 'react-nativ
 import { connect } from 'react-redux';
 import * as selectors from '../../../reducers';
 import * as actions from '../../../actions/navigators'
+import * as profileActions from '../../../actions/profile'
+
 const { height, width } = Dimensions.get('window')
 class SplashScreen extends React.Component {
-
     componentDidMount() {
         this.props.setNavigation(this.props.navigation)
-        setTimeout(() => (this.props.navigation.navigate(this.props.token ? 'App' : 'Auth')), 1000);
+        if (this.props.token) {
+            this.props.fetchUserProfile()
+        } else {
+            this.props.navigation.navigate('Auth')
+        }
     }
     render() {
 
@@ -47,13 +52,15 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        token: selectors.getAuthToken(state),
-        tokenDecoded: selectors.getAuthDecoded(state),
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+        fetchUserProfile: () => {
+            dispatch(profileActions.startFetchUserProfile())
+        },
         setNavigation: navigator => {
             dispatch(actions.startPutRootNavigation())
             try {
@@ -61,7 +68,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             } catch{
                 dispatch(actions.failedSetRootNavigator())
             }
-        }
+        },
     }
 }
 
