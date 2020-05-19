@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import * as selectors from '../../../reducers';
 import * as actions from '../../../actions/navigators'
 import * as profileActions from '../../../actions/profile'
+import * as genresActions from '../../../actions/genres'
+import * as favoriteActions from '../../../actions/favorites'
 
 const { height, width } = Dimensions.get('window')
 class SplashScreen extends React.Component {
@@ -14,6 +16,8 @@ class SplashScreen extends React.Component {
         this.props.setNavigation(this.props.navigation)
         if (this.props.token) {
             this.props.fetchUserProfile()
+            this.props.fetchGenres()
+            this.props.fetchFavorites()
         } else {
             this.props.navigation.navigate('Auth')
         }
@@ -61,11 +65,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         fetchUserProfile: () => {
             dispatch(profileActions.startFetchUserProfile())
         },
+        fetchGenres: () => {
+            dispatch(genresActions.startFetchGenres())
+        },
+        fetchFavorites: () => {
+            dispatch(favoriteActions.startFetchFavorites())
+        },
         setNavigation: navigator => {
             dispatch(actions.startPutRootNavigation())
             try {
                 dispatch(actions.completeSetRootNavigator(navigator))
-            } catch{
+            } catch {
                 dispatch(actions.failedSetRootNavigator())
             }
         },

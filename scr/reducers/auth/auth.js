@@ -4,6 +4,22 @@ import { combineReducers } from 'redux';
 
 import * as types from '../../types/auth';
 
+const isChangingPassword = (state = false, action) => {
+    switch (action.type) {
+        case types.CHANGE_PASSWORD_STARTED: {
+            return true;
+        }
+        case types.CHANGE_PASSWORD_COMPLETED: {
+            return false;
+        }
+        case types.CHANGE_PASSWORD_FAILED: {
+            return false;
+        }
+    }
+
+    return state;
+};
+
 const token = (state = null, action) => {
     switch (action.type) {
         case types.AUTHENTICATION_STARTED: {
@@ -76,6 +92,7 @@ const auth = combineReducers({
     decoded,
     isAuthenticating,
     isRegistering,
+    isChangingPassword,
 });
 
 export default auth;
@@ -91,3 +108,4 @@ export const getAuthExpiration = (state) =>
 export const getAuthUsername = (state) =>
     state.decoded ? state.decoded.username : null;
 export const getAuthDecoded = (state) => state.decoded
+export const getIsChangingPassword = (state) => state.isChangingPassword

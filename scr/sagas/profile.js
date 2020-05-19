@@ -23,15 +23,16 @@ function* fetchUserProfile() {
     const navigator = yield select(selectors.getRootNavigator)
     try {
         const onSuccessFetchUserProfile = function* (profile, code) {
+            navigator.navigate('App')
             yield put(actions.completeFetchUserProfile(profile));
         }
         const onErrorFetchUserProfile = function* (response) {
+            navigator.navigate('App')
             ToastAndroid.show('Hubo un error al cargar el usuario', Toast.LONG)
             yield put(actions.failedFetchUserProfile());
         }
         // Esta funcion parametro (funcion, parametros, callback en caso sea exitoso, un callback en caso que sea 400)
         yield handleResponse(list, 'profiles/user/', onSuccessFetchUserProfile, onErrorFetchUserProfile)
-        navigator.navigate('App')
     } catch (error) {
 
         navigator.navigate('App')

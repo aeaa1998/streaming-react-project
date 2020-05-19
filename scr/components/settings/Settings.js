@@ -37,7 +37,7 @@ function SettingsItem({ item, navigation, ...props }) {
                     navigation.navigate(item.route)
                 } else {
                     alerts.decisionDialog("Cerrar sesión", "Estas seguro que deseas cerrar sesión",
-                        () => props.logout(props.rootNavigator)
+                        () => props.logout()
                     )
                 }
             }
@@ -105,8 +105,8 @@ export default connect(
         rootNavigator: selectors.getRootNavigator(state),
     }),
     dispatch => ({
-        logout(rootNavigator) {
+        logout() {
             dispatch(actions.logout());
-            rootNavigator.navigate('Auth')
+            // rootNavigator.navigate('Auth')
         },
     }))(Settings);

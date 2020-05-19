@@ -8,7 +8,7 @@ import { SafeAreaView, View, ImageBackground, StyleSheet, Text } from 'react-nat
 import { imageHeader } from '../../styles/images'
 import { elevation } from '../../styles/shadows'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-const Profile = ({ profile }) => {
+const Profile = ({ navigation, profile }) => {
     const onPageLayout = (event) => {
         const { width, height } = event.nativeEvent.layout;
         setParentSize(height)
@@ -18,11 +18,14 @@ const Profile = ({ profile }) => {
     const [parentSize, setParentSize] = useState(100)
 
     return (
-        <SafeAreaView style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
             <ImageBackground
                 source={{ uri: 'https://webdesigntips.blog/wp-content/uploads/2018/06/20-Free-Abstract-Material-Design-Backgrounds.jpg' }}
                 onLayout={onPageLayout}
-                style={{ backgroundColor: 'gray', flex: 0.3, }}>
+                style={{
+                    backgroundColor: 'gray', flex: 0.3, resizeMode: 'cover',
+                    justifyContent: 'center',
+                }}>
                 <Text style={{ flex: 0.8, fontSize: 36, color: 'white', textAlignVertical: 'center', fontWeight: '600', textAlign: 'center' }}>
                     {profile.user.first_name} {profile.user.last_name}
                 </Text>
@@ -43,8 +46,8 @@ const Profile = ({ profile }) => {
                 >
                 </ImageBackground>
             </ImageBackground>
-            <View style={{ marginTop: (circeSize / 2) + 30, flex: 0.6, padding: 15 }}>
-                <Text style={{ fontSize: 20, marginBottom: 8, fontWeight: 'bold' }}>
+            <View style={{ flex: 0.6, paddingHorizontal: 15 }}>
+                <Text style={{ marginTop: (circeSize / 2) + 30, fontSize: 20, marginBottom: 8, fontWeight: 'bold' }}>
                     Username
                     </Text>
                 <Text style={{ fontSize: 18, marginBottom: 12, borderBottomWidth: 1, paddingVertical: 5 }}>
@@ -65,14 +68,14 @@ const Profile = ({ profile }) => {
 
             </View>
             <View style={{ flex: 0.1 }}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={() => navigation.push('ChangePassword')} >
                     <Text style={{ fontSize: 18, marginBottom: 8, fontWeight: 'bold', textAlign: 'right', paddingHorizontal: 15 }}>
                         Cambiar contraseña
                 </Text>
 
                 </TouchableOpacity>
             </View>
-        </SafeAreaView >
+        </View >
     )
 }
 const styles = StyleSheet.create(

@@ -13,7 +13,7 @@ export const configureStore = () => {
         {
             key: 'root',
             storage: AsyncStorage,
-            whitelist: ['auth'],
+            whitelist: ['auth', 'navigators'],
         },
         reducer,
     );

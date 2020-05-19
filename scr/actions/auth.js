@@ -38,3 +38,24 @@ export const registerFailed = () => (
     { type: types.REGISTRATION_FAILED, }
 );
 
+
+export const changePasswordStarted = ({ oldPassword, newPassword }, callback) => (
+    {
+        type: types.CHANGE_PASSWORD_STARTED,
+        payload: { oldPassword, newPassword },
+        callback: callback,
+    }
+);
+
+export const changePasswordFailed = () => (
+    {
+        type: types.CHANGE_PASSWORD_FAILED,
+    }
+);
+
+export const changePasswordSucceded = () => (
+    {
+        type: types.CHANGE_PASSWORD_COMPLETED,
+    }
+);
+

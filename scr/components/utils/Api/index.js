@@ -10,7 +10,8 @@ import {
     put,
     select,
 } from 'redux-saga/effects';
-const API_BASE_URL = 'https://e17357b3.ngrok.io/api';
+const prefix = 'https://e0b49904.ngrok.io'
+const API_BASE_URL = `${prefix}/api`;
 
 function selectToken(state) {
     return state.auth.token;
@@ -30,6 +31,7 @@ const resolveHeaders = (withAuth) => {
     return headers;
 };
 
+
 export const retrieve = ({ url, id }, withAuth = true) => fetch(`${API_BASE_URL}/${url}/${id}`, { headers: resolveHeaders(withAuth) });
 export const list = (url, withAuth = true) => fetch(`${API_BASE_URL}/${url}`, { headers: resolveHeaders(withAuth) });
 
@@ -37,6 +39,12 @@ export const create = ({ url, data }, withAuth = true) =>
     fetch(`${API_BASE_URL}/${url}`, {
         method: 'POST', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
+        headers: resolveHeaders(withAuth),
+    });
+
+export const deleteAction = ({ url, id }, withAuth = true) =>
+    fetch(`${API_BASE_URL}/${url}/${id}/`, {
+        method: 'DELETE', // or 'PUT'
         headers: resolveHeaders(withAuth),
     });
 
@@ -49,17 +57,16 @@ export const update = ({ url, data }, withAuth = true) =>
     });
 
 export const handleResponse = function* (method, parameters, onSuccess = function* (data, code) { }, onError = function* (response) { }) {
-    // const response = yield call(fetch, 'url', {})
-    // get de un user
     const response = yield call(method, parameters);
 
     if (response.status >= 200 && response.status <= 299) {
         const code = response.status
-        const data = yield response.json();
-        yield onSuccess(data, code);
-        // token 1 dia
-        // 7 dias
-
+        if (response.status == 204) {
+            yield onSuccess(response, code);
+        } else {
+            const data = yield response.json();
+            yield onSuccess(data, code);
+        }
     } else {
         if (response.status == 401) {
             let token = selectToken(store.getState());
@@ -69,9 +76,12 @@ export const handleResponse = function* (method, parameters, onSuccess = functio
                 yield put(actions.completeLogin(newToken));
                 yield handleResponse(method, parameters, onSuccess, onError);
             } else {
-                yield put(actions.logout());
-                const navigator = yield select(selectors.getRootNavigator);
-                navigator.navigate('Auth');
+                try {
+                    const { errors } = yield tokenResponse.json();
+                    yield put(actions.logout());
+                } catch (e) {
+
+                }
             }
         } else {
             yield onError(response);

@@ -8,7 +8,8 @@ import { SafeAreaView, View, FlatList, StyleSheet, Text, ImageBackground } from 
 function Facts({ item, navigation, ...props }) {
     return (
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-            <ImageBackground source={{ uri: 'https://c4.wallpaperflare.com/wallpaper/266/1009/248/juice-wrld-juice-wrld-rip-hd-wallpaper-preview.jpg' }} style={styles.imageHeader}>
+            <ImageBackground source={{ uri: 'https://c4.wallpaperflare.com/wallpaper/266/1009/248/juice-wrld-juice-wrld-rip-hd-wallpaper-preview.jpg' }}
+                style={styles.imageHeader}>
                 <Text
                     style={{ flex: 1, fontSize: 44, color: 'white', textAlign: 'center', textAlignVertical: 'center' }}
                 >STRME Facts</Text>
