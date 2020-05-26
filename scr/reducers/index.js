@@ -1,7 +1,7 @@
 /* eslint-disable semi */
 /* eslint-disable prettier/prettier */
+// import { combineReducers } from 'redux'
 import { combineReducers } from 'redux'
-
 import { reducer as form } from 'redux-form'
 import auth, * as authGetters from './auth/auth';
 import navigators, * as navGetters from './navigators'
@@ -11,6 +11,8 @@ import trackSelected, * as selectedTrackGetters from './tracks/selectedTrack'
 import genre, * as genreGetters from './genres'
 import favoritesReducer, * as favoritesGetters from './favorites'
 import playlistsReducer, * as playlistsGetters from './playlists'
+import selectedPlaylistReducer, * as selectedPlaylistGetters from './playlists/selectedPlaylist'
+import artistsReducer, * as artistsGetters from './artists'
 
 
 
@@ -24,7 +26,9 @@ const reducer = combineReducers({
     playlistsReducer,
     favoritesReducer,
     trackSelected,
-    form,
+    artistsReducer,
+    selectedPlaylistReducer,
+    // form,
 });
 
 
@@ -49,6 +53,7 @@ export const getRootNavigator = state => navGetters.getRootNavigator(state.navig
 // Profile  Getters
 export const getUserProfile = state => profileGetters.getUserProfile(state.profile)
 export const getIsFetchingProfile = state => profileGetters.getIsFetchingProfile(state.profile)
+export const getIsUploadingProfile = state => profileGetters.getIsUploadingProfile(state.profile)
 
 // Tracks  Getters
 export const getTracks = state => trackGetters.getTracks(state.track)
@@ -71,7 +76,24 @@ export const getIsFetchingFavorites = (state) => favoritesGetters.getIsFetchingF
 
 
 //playlists Getters
-export const getPlaylist = (state) => playlistsGetters.getPlaylist(state.playlistsReducer)
+export const getPlaylist = (state, id) => playlistsGetters.getPlaylist(state.playlistsReducer, id)
 export const getPlaylists = (state) => playlistsGetters.getPlaylists(state.playlistsReducer)
+export const getIsDeletingPlaylist = (state) => playlistsGetters.getIsDeletingPlaylist(state.playlistsReducer)
 export const getIsFetchingPlaylists = (state) => playlistsGetters.getIsFetchingPlaylists(state.playlistsReducer)
 export const getIsAddingPlaylists = (state, type) => playlistsGetters.getIsAddingPlaylists(state.playlistsReducer, type)
+
+//Artists Getters
+export const getArtist = (state, id) => artistsGetters.getArtist(state.artistsReducer, id)
+export const getArtists = (state) => artistsGetters.getArtists(state.artistsReducer)
+export const getIsFetchingArtists = (state) => artistsGetters.getIsFetchingArtists(state.artistsReducer)
+export const getArtistsByGenreId = (state) => artistsGetters.getArtistsByGenreId(state.artistsReducer);
+export const getGenreWithArtists = (state, id) => artistsGetters.getGenre(state.artistsReducer);
+export const getGenresWithArtists = (state) => artistsGetters.getGenres(state.artistsReducer)
+export const getIsFetchingSelectedArtist = (state) => artistsGetters.getIsFetchingSelectedArtist(state.artistsReducer)
+export const getSelectedArtist = (state) => artistsGetters.getSelectedArtist(state.artistsReducer)
+
+//selected playlists Getters
+export const getSelectedPlaylist = (state) => selectedPlaylistGetters.getSelectedPlaylist(state.selectedPlaylistReducer)
+export const getSelectedPlaylistTracks = (state) => selectedPlaylistGetters.getSelectedPlaylistTracks(state.selectedPlaylistReducer)
+export const getIsFetchingSelectedPlaylist = (state) => selectedPlaylistGetters.getIsFetchingSelectedPlaylist(state.selectedPlaylistReducer)
+export const getIsDeletingTrackFromPlaylist = (state) => selectedPlaylistGetters.getIsDeletingTrackFromPlaylist(state.selectedPlaylistReducer)

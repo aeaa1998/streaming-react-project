@@ -8,10 +8,10 @@ import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView';
 import { imageHeaderStyle } from '../../styles/images';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/tracks'
+import * as genresActions from '../../actions/genres'
 import ImageHeader from '../utils/containers/Headers/ImageHeader';
 import * as selectors from '../../reducers'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-// console.log(imageHeaderStyle)
 const styles = StyleSheet.create({
     imageHeader: imageHeaderStyle,
 });
@@ -63,9 +63,10 @@ const SongItem = ({ song, navigation }) => {
                 borderRadius: 5,
             }}
             onPress={() => {
-                navigation.navigate('Tracks.Detail', {
-                    trackId: song.id,
-                });
+                navigation.navigate('Tracks.Detail'
+                    , {
+                        trackId: song.id,
+                    });
             }}
         >
             <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -102,56 +103,61 @@ const TracksHome = ({ isLoadingTracks, isLoadingGenres, tracks, genres = [], rou
     const [loadingRows, setLoadingRows] = useState(true)
     const changeLoadingRows = () => setTimeout(() => { setLoadingRows(false) }, 1200)
     useEffect(() => {
+        props.fetchGenres()
         props.fetchTracks(selectedGenre)
     }, []);
     return (
         <BaseLoaderView
             isLoading={isLoadingTracks && isLoadingGenres}
+            fetchCorrectly={tracks != undefined}
             style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', alignContent: 'center' }}
         >
-            <ScrollView
-                contentContainerStyle={{ alignItems: 'center' }}
-            >
-                <Text style={{ width: '100%', paddingHorizontal: 10, fontSize: 18, marginTop: 20, textAlign: 'left', fontWeight: '100', color: 'gray' }}>Géneros</Text>
-                <FlatList
-                    ListHeaderComponent={() => <GenreItem genre={headerGenre} navigation={navigation} isSelected={selectedGenre == headerGenre.id} callback={(genre) => {
-                        props.fetchTracks(genre)
-                        setGenreId(genre)
-                        setTitle('Canciones')
-                        setLoadingRows(true)
-                    }} />}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal={true}
-                    data={genres}
-                    style={{ paddingLeft: 5 }}
-                    renderItem={({ item }) =>
-                        <GenreItem genre={item} navigation={navigation} isSelected={selectedGenre == item.id} callback={(genre) => {
-                            props.fetchTracks(genre)
-                            setGenreId(genre)
-                            setTitle('Canciones filtradas por genero')
-                            setLoadingRows(true)
-                        }} />
-                    }
-                    keyExtractor={item => item.id} />
 
-                <FlatList
-                    ListHeaderComponent={header(title)}
-                    showsVerticalScrollIndicator={false}
-                    data={isLoadingTracks || loadingRows ? [1] : (selectedGenre == 0 ? tracks : tracksByGenre)}
-                    numColumns={2}
-                    horizontal={false}
-                    onEndReached={changeLoadingRows}
-                    refreshing={isLoadingTracks}
-                    renderItem={({ item }) =>
-                        isLoadingTracks || loadingRows ?
-                            <ActivityIndicator
-                                style={{ alignSelf: 'center', width: '100%', height: '70%' }}
-                                size={'large'} />
-                            : <SongItem navigation={navigation} song={item} />}
-                    keyExtractor={item => item.id}
-                />
-                {/* </BaseLoaderView> */}
-            </ScrollView>
+
+            <FlatList
+                ListHeaderComponent={
+                    () => {
+                        return (<>
+                            <Text style={{ width: '100%', paddingHorizontal: 10, fontSize: 18, marginTop: 20, textAlign: 'left', fontWeight: '100', color: 'gray' }}>Géneros</Text>
+                            <FlatList
+                                ListHeaderComponent={() => <GenreItem genre={headerGenre} navigation={navigation} isSelected={selectedGenre == headerGenre.id} callback={(genre) => {
+                                    props.fetchTracks(genre)
+                                    setGenreId(genre)
+                                    setTitle('Canciones')
+                                    setLoadingRows(true)
+                                }} />}
+                                showsHorizontalScrollIndicator={false}
+                                horizontal={true}
+                                data={genres}
+                                style={{ paddingLeft: 5 }}
+                                renderItem={({ item }) =>
+                                    <GenreItem genre={item} navigation={navigation} isSelected={selectedGenre == item.id} callback={(genre) => {
+                                        props.fetchTracks(genre)
+                                        setGenreId(genre)
+                                        setTitle('Canciones filtradas por genero')
+                                        setLoadingRows(true)
+                                    }} />
+                                }
+                                keyExtractor={item => item.id} />
+                            {header(title)}
+                        </>)
+                    }
+                }
+                showsVerticalScrollIndicator={false}
+                data={isLoadingTracks || loadingRows ? [1] : (selectedGenre == 0 ? tracks : tracksByGenre)}
+                numColumns={2}
+                horizontal={false}
+                onEndReached={changeLoadingRows}
+                refreshing={isLoadingTracks}
+                renderItem={({ item }) =>
+                    isLoadingTracks || loadingRows ?
+                        <ActivityIndicator
+                            style={{ alignSelf: 'center', width: '100%', height: 200 }}
+                            size={'large'} />
+                        : <SongItem navigation={navigation} song={item} />}
+                keyExtractor={item => item.id}
+            />
+            {/* </BaseLoaderView> */}
             {/* </View> */}
         </BaseLoaderView>
     );
@@ -174,6 +180,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         } else {
             dispatch(actions.startFetchTracks())
         }
+    },
+    fetchGenres: () => {
+        dispatch(genresActions.startFetchGenres())
     },
 })
 export default connect(

@@ -44,7 +44,7 @@ const order = (state = [], action) => {
             return [...state, action.payload.favorite.id]
         }
         case types.DELETE_FAVORITES_COMPLETED: {
-            return state.map(id => id != action.payload.favorite.id)
+            return state.filter(id => id != action.payload.favorite.id)
         }
     }
 

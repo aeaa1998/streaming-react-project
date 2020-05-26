@@ -6,7 +6,8 @@ import { watchers as tracksWatchers } from './tracks';
 import { watchers as genresWatchers } from './genres';
 import { watchers as favoritesWatchers } from './favorites';
 import { watchers as playlistWatchers } from './playlists';
-import { watchProfileFetchStarted } from './profile';
+import { watchers as artistsWatchers } from './artists';
+import { watchers as profileWatchers } from './profile';
 const forkWatchers = (watcher) => fork(watcher)
 function* mainSaga() {
     yield all([
@@ -15,7 +16,8 @@ function* mainSaga() {
         ...tracksWatchers.map(forkWatchers),
         ...genresWatchers.map(forkWatchers),
         ...favoritesWatchers.map(forkWatchers),
-        fork(watchProfileFetchStarted),
+        ...artistsWatchers.map(forkWatchers),
+        ...profileWatchers.map(forkWatchers),
     ]);
 }
 

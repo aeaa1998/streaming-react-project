@@ -1,15 +1,23 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, Animated } from 'react-native';
+import { SafeAreaView, View, FlatList, Image, Text, TouchableHighlight } from 'react-native';
 import { createStackNavigator, TransitionPresets, TransitionSpecs, HeaderStyleInterpolators, Header } from '@react-navigation/stack';
 import Profile from './Profile'
 import ChangePassword from './ChangePassword'
 import Settings from './Settings'
 import Facts from './Facts'
+import Track from '../tracks/Track'
+import Playlists from '../playlist'
+import Playlist from '../playlist/Playlist'
+import AddPlaylist from '../playlist/AddPlaylist'
+import Artist from '../artists/Artist'
+import FavoriteTracks from '../favorites/FavoriteTracks'
+import FavoriteArtists from '../favorites/FavoriteArtists'
 
 const Stack = createStackNavigator();
 
-const SettingsStack = () => {
+const SettingsStack = (props) => {
     return (
         <Stack.Navigator
             initialRouteName="SettingsList"
@@ -36,6 +44,63 @@ const SettingsStack = () => {
                     headerTransparent: true,
                 }}
             />
+            <Stack.Screen name="Playlists" component={Playlists}
+
+                options={({ navigation, screenProps }) => ({
+                    title: '',
+                    headerTransparent: true,
+                    headerRight: () => (
+                        <TouchableHighlight
+                            underlayColor={'rgba(52, 52, 52, 0.1)'}
+                            style={{ height: 30, width: 30 }}
+                            onPress={(p) => {
+                                navigation.push('Add.Playlist')
+                            }}
+                        >
+                            <Image
+                                resizeMode="contain"
+                                source={require('../../assets/images/edit.png')}
+                                style={{
+                                    width: 20,
+                                    height: 30,
+                                }} />
+                        </TouchableHighlight>
+                    ),
+                })}
+            />
+            <Stack.Screen name="Playlist.Detail" component={Playlist}
+                options={{
+                    title: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen name="Add.Playlist" component={AddPlaylist}
+                options={{
+                    title: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen name="Favorite.Songs" component={FavoriteTracks}
+                options={{
+                    title: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen name="Tracks.Detail" component={Track}
+                options={{
+                    title: 'Detalle de la canción',
+                }} />
+
+            <Stack.Screen name="Favorite.Artists" component={FavoriteArtists}
+                options={{
+                    title: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen name="Artist.Detail" component={Artist}
+                options={{
+                    title: 'Detalle del artista',
+                }} />
         </Stack.Navigator>
     );
 }

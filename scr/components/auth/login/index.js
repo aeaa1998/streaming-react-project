@@ -3,6 +3,7 @@
 import { acceptDialog } from '../../../components/utils/Alerts'
 import React, { useState } from 'react';
 import { ProgressLoader } from '../../utils/Loaders/ProgressLoader'
+import LoginForm from './LoginForm'
 const image = { uri: "https://i.imgur.com/UuDQFWd.jpg" };
 import { connect } from 'react-redux';
 import { View, Text, Dimensions, ImageBackground, StyleSheet, TextInput, Button } from "react-native";
@@ -18,7 +19,7 @@ const LoginView = ({ navigation, onSubmit, isLoading }) => {
             <ImageBackground source={image} style={styles.image}>
                 <ProgressLoader loadingLabel="Ingresando" visible={isLoading} />
                 <View style={styles.card}>
-
+                    {/* <LoginForm /> */}
                     <View style={{ flexDirection: "column", flex: 1 }}>
                         <Text style={{ fontSize: 28, textAlign: "center" }} >Login</Text>
                         <View style={{ flex: 0.3, marginTop: 32 }} >

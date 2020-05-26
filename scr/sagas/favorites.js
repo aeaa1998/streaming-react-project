@@ -45,7 +45,6 @@ function* addFavorite(action) {
         }
         const onError = function* (response) {
             const json = yield response.json()
-            console.log(json)
             ToastAndroid.show(errorMsg, ToastAndroid.LONG)
             yield put(actions.failedAddFavorites());
         }
@@ -64,13 +63,11 @@ function* deleteFavorite(action) {
         }
         const onError = function* (response) {
             const json = yield response.json()
-            console.log(json)
             ToastAndroid.show(errorMsg, ToastAndroid.LONG)
             yield put(actions.failedDeleteFavorites());
         }
         yield handleResponse(deleteAction, { url: 'favorites', id: action.payload.favorite.id }, onSuccess, onError)
     } catch (error) {
-        console.log(error)
         ToastAndroid.show(errorMsg, ToastAndroid.LONG)
         yield put(actions.failedDeleteFavorites());
     }

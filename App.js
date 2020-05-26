@@ -13,6 +13,7 @@ import computedShapes from './scr/styles/computedShapes'
 import alerts from './scr/components/utils/Alerts'
 // create switch navigation with authentication flow and main app
 // [fragmento , ]
+// export const { store } = configureStore();
 export const { store, persistor } = configureStore();
 global.computedShapes = computedShapes
 global.alerts = alerts

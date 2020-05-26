@@ -19,4 +19,22 @@ export const failedFetchUserProfile = () => (
     }
 );
 
+export const startUpdateProfile = (payload) => (
+    {
+        type: types.UPDATE_PROFILE_STARTED,
+        payload: payload,
+    }
+);
+
+export const completeUpdateProfile = (profileUpdated) => (
+    {
+        type: types.UPDATE_PROFILE_COMPLETED,
+        payload: { profileUpdated: profileUpdated }
+    }
+);
+
+export const failedUpdateProfile = () => (
+    { type: types.UPDATE_PROFILE_FAILED }
+);
+
 

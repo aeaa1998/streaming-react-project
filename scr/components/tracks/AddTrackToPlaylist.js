@@ -7,22 +7,30 @@ import * as actions from '../../actions/playlists'
 import * as selectors from '../../reducers'
 import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView';
 import { View, Text, TouchableOpacity, TouchableHighlight, Image, Dimensions, Modal, StyleSheet, TouchableWithoutFeedback, FlatList } from 'react-native'
-const { width, height } = Dimensions.get('window')
+// const { width, height } = Dimensions.get('window')
 const PlaylistItem = ({ playlist, callback }) => (
-    <TouchableOpacity style={{
-        width: '100%', paddingHorizontal: 5, paddingVertical: 10,
-        borderBottomColor: 'black', borderBottomWidth: 0.3
-    }}>
+    <TouchableOpacity
+        onPress={() => callback()}
+        style={{
+            height: 50,
+            width: '100%', paddingHorizontal: 5, paddingVertical: 10,
+            borderBottomColor: 'black', borderBottomWidth: 0.3
+        }}>
         <Text style={{ fontSize: 16, fontWeight: '400', textAlignVertical: 'center', height: '100%' }}>{playlist.name}</Text>
     </TouchableOpacity>)
 
-const AddTrackToPlaylist = ({ visible, playlists, setStateCallback, isLoading, ...props }) => {
+const AddTrackToPlaylist = ({ visible, playlists,
+    selected = {},
+    setStateCallback,
+    isLoading,
+    addToPlaylist = (playlist) => { },
+    ...props }) => {
     useEffect(() => {
         props.fetchPlaylists()
     }, []);
     return (
         <Modal
-            animationType="slide"
+            animationType="fade"
             transparent={true}
             visible={visible}
             onRequestClose={() => { setStateCallback(false) }}
@@ -60,7 +68,8 @@ const AddTrackToPlaylist = ({ visible, playlists, setStateCallback, isLoading, .
                                 horizontal={false}
                                 showsVerticalScrollIndicator={false}
                                 ListEmptyComponent={() =>
-                                    (<View style={{ flex: 1 }}>
+                                    (<View
+                                        style={{ flex: 1 }}>
                                         <Text
                                             style={{ textAlignVertical: 'center', textAlign: 'center', fontSize: 22 }}
                                         >No se encontro resultados :C</Text>
@@ -69,7 +78,10 @@ const AddTrackToPlaylist = ({ visible, playlists, setStateCallback, isLoading, .
                                 data={playlists}
                                 keyExtractor={item => item.id}
                                 renderItem={({ item }) =>
-                                    <PlaylistItem playlist={item} />
+                                    <PlaylistItem callback={() => {
+                                        addToPlaylist(item)
+                                        setStateCallback(false)
+                                    }} playlist={item} />
                                 }
                             />
                         </View>
@@ -105,18 +117,19 @@ const mapDispatchToProps = (dispatch, { route, ...props }) => ({
     fetchPlaylists: () => {
         dispatch(actions.startFetchPlaylists())
     },
-    addTrackToPlaylist: (playlist, track) => {
-        dispatch(actions.startAddTrackToPlaylist(playlist, track))
-    }
+    // addTrackToPlaylist: (playlist, track) => {
+    //     dispatch(actions.startAddTrackToPlaylist(playlist, track))
+    // }
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
-    addTrackToPlaylist: (playlist) => {
-        dispatchProps.addTrackToPlaylist(playlist, stateProps.selectedTrack)
-    },
+    playlists: stateProps.playlists.filter(playlist => !playlist.tracks.includes(stateProps.selectedTrack.id)),
+    // addTrackToPlaylist: (playlist) => {
+    //     dispatchProps.addTrackToPlaylist(playlist, stateProps.selectedTrack)
+    // },
 })
 
 export default connect(

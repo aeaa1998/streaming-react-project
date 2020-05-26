@@ -8,14 +8,14 @@ import { connect } from 'react-redux'
 import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView';
 import moment from 'moment'
 import * as actions from '../../actions/tracks'
+import * as playlistActions from '../../actions/playlists'
 import * as favoriteActions from '../../actions/favorites'
 import * as selectors from '../../reducers'
 import { useHeaderHeight } from '@react-navigation/stack';
 import AddTrackToPlaylist from './AddTrackToPlaylist'
 
 const bg = 'rgb(40, 42, 54)'
-
-const Track = ({ selectedTrack, navigation, isLoading, route, ...props }) => {
+const Track = ({ selectedTrack, navigation, isLoading, addTrackToPlaylist, route, ...props }) => {
     const { width, height } = Dimensions.get('window')
     const [modalVisible, setModalVisible] = useState(false)
     const fetchCorrect = () => !_.isEqual(selectedTrack, {})
@@ -40,7 +40,9 @@ const Track = ({ selectedTrack, navigation, isLoading, route, ...props }) => {
                 (<View
                     style={{ flex: 1 }}
                 >
-                    <AddTrackToPlaylist visible={modalVisible} setStateCallback={setModalVisible} />
+                    <AddTrackToPlaylist
+                        addToPlaylist={addTrackToPlaylist(selectedTrack)}
+                        visible={modalVisible} setStateCallback={setModalVisible} />
                     <Image
                         source={{ uri: `https://picsum.photos/seed/${selectedTrack.name}/400` }}
                         style={{
@@ -125,6 +127,7 @@ const mapDispatchToProps = (dispatch, { route, ...props }) => ({
         const favorite = favoriteTracks.find(favoriteTrack => favoriteTrack.track.id === trackId)
         dispatch(favoriteActions.startDeleteFavorites(favorite))
     },
+    addTrackToPlaylist: (track) => (playlist) => { dispatch(playlistActions.startAddTrackToPlaylist(playlist, track)) }
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

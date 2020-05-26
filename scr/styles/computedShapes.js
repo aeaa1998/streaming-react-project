@@ -5,4 +5,9 @@ const computedCircle = (dimension) => ({
     borderRadius: dimension / 2
 })
 
-export default { computedCircle }
+const computedSquare = (dimension) => ({
+    height: dimension,
+    width: dimension,
+})
+
+export default { computedCircle, computedSquare }

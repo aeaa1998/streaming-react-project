@@ -10,7 +10,7 @@ import {
     put,
     select,
 } from 'redux-saga/effects';
-const prefix = 'https://e0b49904.ngrok.io'
+const prefix = 'https://ea80efe4.ngrok.io';
 const API_BASE_URL = `${prefix}/api`;
 
 function selectToken(state) {
@@ -42,15 +42,20 @@ export const create = ({ url, data }, withAuth = true) =>
         headers: resolveHeaders(withAuth),
     });
 
-export const deleteAction = ({ url, id }, withAuth = true) =>
-    fetch(`${API_BASE_URL}/${url}/${id}/`, {
+export const deleteAction = ({ url, id, data = undefined }, withAuth = true) => {
+    let config = {
         method: 'DELETE', // or 'PUT'
         headers: resolveHeaders(withAuth),
-    });
+    }
+    if (data != undefined) {
+        config['body'] = JSON.stringify(data)
+    }
+    return fetch(`${API_BASE_URL}/${url}/${id}/`, config)
+};
 
 
-export const update = ({ url, data }, withAuth = true) =>
-    fetch(`${API_BASE_URL}/${url}`, {
+export const update = ({ url, id, data }, withAuth = true) =>
+    fetch(`${API_BASE_URL}/${url}/${id}/`, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
         headers: resolveHeaders(withAuth),
@@ -72,8 +77,9 @@ export const handleResponse = function* (method, parameters, onSuccess = functio
             let token = selectToken(store.getState());
             const tokenResponse = yield call(create, { url: 'token-refresh/', data: { token: token } }, false);
             if (tokenResponse.status >= 200 && tokenResponse.status <= 299) {
-                const { newToken } = yield tokenResponse.json();
-                yield put(actions.completeLogin(newToken));
+                const { token } = yield tokenResponse.json();
+                console.log(token)
+                yield put(actions.completeLogin(token));
                 yield handleResponse(method, parameters, onSuccess, onError);
             } else {
                 try {

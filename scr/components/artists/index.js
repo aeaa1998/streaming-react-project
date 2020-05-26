@@ -2,37 +2,33 @@
 /* eslint-disable no-trailing-spaces */
 import React from 'react'
 import { View } from 'react-native'
+import Main from './Main'
+import Artist from './Artist'
 import { createStackNavigator, TransitionPresets, TransitionSpecs, HeaderStyleInterpolators, Header } from '@react-navigation/stack';
-import TracksHome from './Main'
-import Track from './Track'
 const Stack = createStackNavigator();
-const TracksNavigation = () => {
+const ArtistsNavigator = () => {
     return (
         <Stack.Navigator
-            initialRouteName="Tracks.Home"
+            initialRouteName="Artists.Home"
             headerMode="float"
             screenOptions={{
                 headerTransparent: true,
                 gestureEnabled: true,
                 headerTintColor: 'white',
-                // headerStyle: { backgroundColor: 'rgb(53, 54, 58)' },
-                // headerStyleInterpolator: HeaderStyleInterpolators.forStatic,
                 ...TransitionPresets.SlideFromRightIOS,
             }}
 
         >
-            <Stack.Screen name="Tracks.Home" component={TracksHome}
-                initialParams={{ selectedGenre: 0, title: 'Canciones' }}
+            <Stack.Screen name="Artists.Home" component={Main}
                 options={{
                     title: '',
                 }} />
-            <Stack.Screen name="Tracks.Detail" component={Track}
+            <Stack.Screen name="Artist.Detail" component={Artist}
                 options={{
-                    title: 'Detalle de la canción',
+                    title: 'Detalle del artista',
                 }} />
-
         </Stack.Navigator>
     )
 }
 
-export default TracksNavigation
+export default ArtistsNavigator

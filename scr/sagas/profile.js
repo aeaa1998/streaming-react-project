@@ -12,9 +12,9 @@ import {
 import * as selectors from '../reducers';
 import * as actions from '../actions/profile';
 import * as types from '../types/profile';
-import { create, list, handleResponse } from '../components/utils/Api'
+import { create, list, handleResponse, update } from '../components/utils/Api'
 
-import { ToastAndroid, Toast, Platform } from 'react-native'
+import { ToastAndroid, Platform } from 'react-native'
 
 
 
@@ -28,7 +28,7 @@ function* fetchUserProfile() {
         }
         const onErrorFetchUserProfile = function* (response) {
             navigator.navigate('App')
-            ToastAndroid.show('Hubo un error al cargar el usuario', Toast.LONG)
+            ToastAndroid.show('Hubo un error al cargar el usuario', ToastAndroid.LONG)
             yield put(actions.failedFetchUserProfile());
         }
         // Esta funcion parametro (funcion, parametros, callback en caso sea exitoso, un callback en caso que sea 400)
@@ -41,13 +41,43 @@ function* fetchUserProfile() {
     }
 }
 
+function* updateProfile(action) {
+    const errorMsg = 'Hubo un error al actualizar el usuario';
+    try {
+        const currentProfile = yield select(selectors.getUserProfile)
+        const onSuccess = function* (profile, code) {
+            console.log(profile)
+            yield put(actions.completeUpdateProfile(profile));
+            ToastAndroid.show('Se cambio con exito el número de telefono', ToastAndroid.LONG)
+        }
+        const onError = function* (response) {
+            ToastAndroid.show(errorMsg, ToastAndroid.LONG)
+            yield put(actions.failedUpdateProfile());
+        }
+        yield handleResponse(update, { url: "profiles", id: currentProfile.id, data: action.payload }, onSuccess, onError)
+    } catch (error) {
+        ToastAndroid.show(errorMsg, ToastAndroid.LONG)
+        yield put(actions.failedUpdateProfile());
+    }
+}
 
 
-export function* watchProfileFetchStarted() {
+
+function* watchProfileFetchStarted() {
     yield takeEvery(
         types.FETCH_PROFILE_STARTED,
         fetchUserProfile,
     );
 }
+function* watchUpdateProfile() {
+    yield takeEvery(
+        types.UPDATE_PROFILE_STARTED,
+        updateProfile,
+    );
+}
 
+export const watchers = [
+    watchProfileFetchStarted,
+    watchUpdateProfile,
+]
 

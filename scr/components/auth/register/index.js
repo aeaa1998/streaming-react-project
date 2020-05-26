@@ -30,27 +30,27 @@ const RegisterView = ({ navigation, isLoading, onSubmit }) => {
                     <View style={{ flexDirection: 'column', flex: 0.9 }}>
                         <View style={{ flex: 1, marginTop: 16 }} >
                             <Text style={{ fontSize: 16, textAlign: 'left' }} >Nombre</Text>
-                            <TextInput value={name} onChangeText={(text) => setName(text)} placeholder="Ingrese su nombre" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                            <TextInput value={name} onChangeText={(text) => setName(text)} placeholder="Ingrese su nombre" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
                             />
                         </View>
-                        <View style={{ flex: 1, marginTop: 32 }} >
+                        <View style={{ flex: 1, marginTop: 24 }} >
                             <Text style={{ fontSize: 16, textAlign: 'left' }} >Email</Text>
-                            <TextInput value={email} onChangeText={(text) => setEmail(text)} placeholder="Ingrese su correo" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                            <TextInput value={email} onChangeText={(text) => setEmail(text)} placeholder="Ingrese su correo" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
                             />
                         </View>
-                        <View style={{ flex: 1, marginTop: 32 }} >
+                        <View style={{ flex: 1, marginTop: 24 }} >
                             <Text style={{ fontSize: 16, textAlign: 'left' }} >Usuario</Text>
-                            <TextInput value={username} onChangeText={(text) => setUsername(text)} placeholder="Ingrese su usuario" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                            <TextInput value={username} onChangeText={(text) => setUsername(text)} placeholder="Ingrese su usuario" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
                             />
                         </View>
-                        <View style={{ flex: 1, marginTop: 32 }} >
+                        <View style={{ flex: 1, marginTop: 24 }} >
                             <Text style={{ fontSize: 16, textAlign: 'left' }} >Contraseña</Text>
-                            <TextInput value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} placeholder="Ingrese su contraseña" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                            <TextInput value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} placeholder="Ingrese su contraseña" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
                             />
                         </View>
-                        <View style={{ flex: 1, marginTop: 32 }} >
+                        <View style={{ flex: 1, marginTop: 24 }} >
                             <Text style={{ fontSize: 16, textAlign: 'left' }} >Confirmación Contraseña</Text>
-                            <TextInput value={passwordConfirmation} onChangeText={(text) => setPasswordConfirmation(text)} secureTextEntry={true} placeholder="Confirme su contraseña" style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                            <TextInput value={passwordConfirmation} onChangeText={(text) => setPasswordConfirmation(text)} secureTextEntry={true} placeholder="Confirme su contraseña" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
                             />
                         </View>
                         <View style={{ flex: 1 }}>
@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     card: {
-        flex: 0.9,
+        flex: 0.99,
         borderRadius: 12,
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        marginVertical: 12,
-        marginHorizontal: 24,
+        marginVertical: 8,
+        marginHorizontal: 10,
         padding: 16,
         paddingTop: 12,
     },

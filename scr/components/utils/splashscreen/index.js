@@ -16,7 +16,6 @@ class SplashScreen extends React.Component {
         this.props.setNavigation(this.props.navigation)
         if (this.props.token) {
             this.props.fetchUserProfile()
-            this.props.fetchGenres()
             this.props.fetchFavorites()
         } else {
             this.props.navigation.navigate('Auth')
@@ -64,9 +63,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchUserProfile: () => {
             dispatch(profileActions.startFetchUserProfile())
-        },
-        fetchGenres: () => {
-            dispatch(genresActions.startFetchGenres())
         },
         fetchFavorites: () => {
             dispatch(favoriteActions.startFetchFavorites())

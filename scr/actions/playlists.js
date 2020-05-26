@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 import * as types from '../types/playlists';
+import { playlistWithTracks } from '../schemas/playlists';
+import track from '../reducers/tracks';
 
 
 export const startFetchPlaylists = () => (
@@ -39,10 +41,10 @@ export const completedDeletePlaylists = (playlist) => (
     }
 );
 
-export const startAddPlaylists = (playlist) => (
+export const startAddPlaylists = (playlist, callback) => (
     {
         type: types.ADD_PLAYLISTS_STARTED,
-        payload: { playlist: playlist },
+        payload: { playlist: playlist, callback: callback },
     }
 );
 export const completedAddPlaylists = (playlist) => (
@@ -63,10 +65,10 @@ export const startAddTrackToPlaylist = (playlist, track) => (
         payload: { playlist: playlist, track: track },
     }
 );
-export const completeAddTrackToPlaylist = (playlist) => (
+export const completeAddTrackToPlaylist = (playlist, track) => (
     {
         type: types.ADD_TRACK_TO_PLAYLIST_COMPLETED,
-        payload: { playlist: playlist },
+        payload: { playlist: playlist, track: track },
     }
 );
 export const failedAddTrackToPlaylist = () => (
@@ -75,5 +77,44 @@ export const failedAddTrackToPlaylist = () => (
     }
 );
 
+export const startFetchSelectedPlaylist = (id) => (
+    {
+        type: types.FETCH_SELECTED_PLAYLIST_STARTED,
+        payload: { id: id, },
+    }
+);
+
+export const completeFetchSelectedPlaylist = (playlist) => (
+    {
+        type: types.FETCH_SELECTED_PLAYLIST_COMPLETED,
+        payload: { selectedPlaylist: playlist },
+    }
+);
+
+export const failedFetchSelectedPlaylist = () => (
+    {
+        type: types.FETCH_SELECTED_PLAYLIST_FAILED,
+    }
+)
+
+export const startDeleteTrackFromPlaylist = (playlistId, trackId) => (
+    {
+        type: types.DELETE_TRACK_FROM_PLAYLIST_STARTED,
+        payload: { playlistId: playlistId, trackId: trackId },
+    }
+);
+
+export const completeDeleteTrackFromPlaylist = (playlistId, trackId) => (
+    {
+        type: types.DELETE_TRACK_FROM_PLAYLIST_COMPLETED,
+        payload: { playlistId: playlistId, trackId: trackId },
+    }
+);
+
+export const failedDeleteTrackFromPlaylist = () => (
+    {
+        type: types.DELETE_TRACK_FROM_PLAYLIST_FAILED,
+    }
+)
 
 

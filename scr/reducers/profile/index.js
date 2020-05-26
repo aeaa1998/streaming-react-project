@@ -14,6 +14,9 @@ const userProfile = (state = {}, action) => {
         case types.FETCH_PROFILE_FAILED: {
             return null;
         }
+        case types.UPDATE_PROFILE_COMPLETED: {
+            return { ...state, ...action.payload.profileUpdated }
+        }
     }
 
     return state;
@@ -34,15 +37,33 @@ const isFetchingProfile = (state = false, action) => {
     return state;
 };
 
+const isUpdatingProfile = (state = false, action) => {
+    switch (action.type) {
+        case types.UPDATE_PROFILE_STARTED: {
+            return true;
+        }
+        case types.UPDATE_PROFILE_COMPLETED: {
+            return false;
+        }
+        case types.UPDATE_PROFILE_FAILED: {
+            return false;
+        }
+    }
+
+    return state;
+};
+
 
 
 
 const profile = combineReducers({
     userProfile,
     isFetchingProfile,
+    isUpdatingProfile,
 });
 
 export default profile;
 
 export const getUserProfile = (state) => state.userProfile;
 export const getIsFetchingProfile = (state) => state.isFetchingProfile;
+export const getIsUploadingProfile = (state) => state.isUpdatingProfile;

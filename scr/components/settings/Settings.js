@@ -21,6 +21,24 @@ const DATA = [
         icon: require('../../assets/images/facts.png'),
     },
     {
+        id: 'playlists',
+        title: 'Mis playlists',
+        route: 'Playlists',
+        icon: require('../../assets/images/black-playlist.png'),
+    },
+    {
+        id: 'favorite-songs',
+        title: 'Canciones Favoritas',
+        route: 'Favorite.Songs',
+        icon: require('../../assets/images/isFavorite.png'),
+    },
+    {
+        id: 'favorite-artists',
+        title: 'Artistas Favoritas',
+        route: 'Favorite.Artists',
+        icon: require('../../assets/images/isFavorite.png'),
+    },
+    {
         id: 'logout',
         title: 'Cerrar sesión',
         route: 'Logout',
