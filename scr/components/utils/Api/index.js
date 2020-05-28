@@ -10,7 +10,7 @@ import {
     put,
     select,
 } from 'redux-saga/effects';
-const prefix = 'https://ea80efe4.ngrok.io';
+const prefix = 'https://06313a4d.ngrok.io';
 const API_BASE_URL = `${prefix}/api`;
 
 function selectToken(state) {

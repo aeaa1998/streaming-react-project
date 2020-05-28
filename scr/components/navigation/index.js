@@ -5,6 +5,8 @@ import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native';
 import Settings from '../settings'
 import TracksNavigation from '../tracks'
 import ArtistsNavigator from '../artists'
+import AlbumNavigator from '../albums'
+
 import { NavigationContainer } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
@@ -17,6 +19,7 @@ const AppNavigator = () => {
 
                 <Tab.Screen name="Canciones" component={TracksNavigation} />
 
+                <Tab.Screen name=" Albums" component= {View}/>
                 <Tab.Screen name="Artist" component={ArtistsNavigator} />
                 {/* <Tab.Screen name="Favoritos" component={ArtistsNavigator} /> */}
                 <Tab.Screen name="Mi perfil" component={Settings} />

@@ -13,21 +13,23 @@ import favoritesReducer, * as favoritesGetters from './favorites'
 import playlistsReducer, * as playlistsGetters from './playlists'
 import selectedPlaylistReducer, * as selectedPlaylistGetters from './playlists/selectedPlaylist'
 import artistsReducer, * as artistsGetters from './artists'
+import albumsReducer, * as albumsGetters from './albums'
 
 
 
 
 const reducer = combineReducers({
-    auth,
-    navigators,
-    profile,
-    track,
-    genre,
-    playlistsReducer,
-    favoritesReducer,
-    trackSelected,
+    //albumsReducer,
     artistsReducer,
+    auth,
+    favoritesReducer,
+    genre,
+    navigators,
+    playlistsReducer,
+    profile,
     selectedPlaylistReducer,
+    track,
+    trackSelected,
     // form,
 });
 
@@ -97,3 +99,22 @@ export const getSelectedPlaylist = (state) => selectedPlaylistGetters.getSelecte
 export const getSelectedPlaylistTracks = (state) => selectedPlaylistGetters.getSelectedPlaylistTracks(state.selectedPlaylistReducer)
 export const getIsFetchingSelectedPlaylist = (state) => selectedPlaylistGetters.getIsFetchingSelectedPlaylist(state.selectedPlaylistReducer)
 export const getIsDeletingTrackFromPlaylist = (state) => selectedPlaylistGetters.getIsDeletingTrackFromPlaylist(state.selectedPlaylistReducer)
+
+// Albums Getters
+
+export const getAlbum = (state, id) => albumsGetters.getAlbum(state.albumsReducer, id)
+export const getAlbums = (state) => albumsGetters.getAlbums(state.albumsReducer)
+export const getIsFetchingAlbums = (state) => albumsGetters.getIsFetchingAlbums(state.albumsReducer)
+export const getAlbumsByGenreId = (state) => albumsGetters.getAlbumsByGenreId(state.albumsReducer);
+export const getGenreWithAlbums = (state, id) => albumsGetters.getGenre(state.albumsReducer);
+export const getGenresWithAlbums = (state) => albumsGetters.getGenres(state.albumsReducer)
+export const getIsFetchingSelectedAlbum = (state) => artistsGetters.getIsFetchingSelectedAlbum(state.albumsReducer)
+export const getSelectedAlbum = (state) => albumsGetters.getSelectedAlbum(state.albumsReducer)
+
+
+
+
+
+
+
+
