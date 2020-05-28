@@ -19,9 +19,8 @@ const AppNavigator = () => {
 
                 <Tab.Screen name="Canciones" component={TracksNavigation} />
 
-                <Tab.Screen name=" Albums" component= {View}/>
+                <Tab.Screen name=" Albums" component= {AlbumNavigator}/>
                 <Tab.Screen name="Artist" component={ArtistsNavigator} />
-                {/* <Tab.Screen name="Favoritos" component={ArtistsNavigator} /> */}
                 <Tab.Screen name="Mi perfil" component={Settings} />
             </Tab.Navigator>
         </NavigationContainer>
