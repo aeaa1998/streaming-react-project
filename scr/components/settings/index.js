@@ -12,7 +12,9 @@ import Playlists from '../playlist'
 import Playlist from '../playlist/Playlist'
 import AddPlaylist from '../playlist/AddPlaylist'
 import Artist from '../artists/Artist'
+import Album from '../albums/Album'
 import FavoriteTracks from '../favorites/FavoriteTracks'
+import FavoriteAlbums from '../favorites/FavoriteAlbums'
 import FavoriteArtists from '../favorites/FavoriteArtists'
 
 const Stack = createStackNavigator();
@@ -101,6 +103,18 @@ const SettingsStack = (props) => {
                 options={{
                     title: 'Detalle del artista',
                 }} />
+            <Stack.Screen name="Favorite.Albums" component={FavoriteAlbums}
+                options={{
+                    title: '',
+                    headerTransparent: true,
+                }}
+            />
+            <Stack.Screen name="Album.Detail" component={Album}
+                options={{
+                    title: 'Detalle del album',
+                    headerTransparent: true,
+                }}
+            />
         </Stack.Navigator>
     );
 }

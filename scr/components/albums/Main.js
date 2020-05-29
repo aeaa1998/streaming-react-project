@@ -55,12 +55,12 @@ const AlbumItem = ({ album, navigation }) => {
                         borderRadius: 5,
                     }}
                 />
-                <Text>  ALBUM : </Text>
                 <Text
                     style={{ flex: 0.1, color: 'black', fontSize: 13, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
                 >{album.title}
 
                 </Text>
+                <Text style = {{color : 'darkslategrey'}}> {album.artist} </Text>
 
             </View>
         </TouchableOpacity>
@@ -78,7 +78,7 @@ const GenreItem = ({ genre, albumsByGenreId, navigation, callback }) => {
                     // callback(genre.id)
                 }}
             >
-                <Text style={{ width: '100%', fontSize: 18, textAlign: 'left', fontWeight: '100', color: 'gray' }}>{genre.name}</Text>
+                <Text style={{ width: '100%', fontSize: 18, textAlign: 'center', fontWeight: '100', color: 'teal', borderColor: 'teal' }}>{genre.name} albums</Text>
             </TouchableOpacity >
             <FlatList
                 data={genre.albums.map(id => albumsByGenreId[id])}

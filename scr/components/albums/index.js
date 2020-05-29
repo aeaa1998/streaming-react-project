@@ -19,11 +19,11 @@ const AlbumNavigator = () => {
             }}
 
         >
-            <Stack.Screen name="Albums.Home" component={View}
+            <Stack.Screen name="Albums.Home" component={Main}
                 options={{
-                    title: ' ALBUMS HOME',
+                    title: '',
                 }} />
-            <Stack.Screen name="Album.Detail" component={View}
+            <Stack.Screen name="Album.Detail" component={Album}
                 options={{
                     title: 'Detalle del Album',
                 }} />

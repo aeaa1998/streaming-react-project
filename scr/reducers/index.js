@@ -19,7 +19,7 @@ import albumsReducer, * as albumsGetters from './albums'
 
 
 const reducer = combineReducers({
-    //albumsReducer,
+    albumsReducer,
     artistsReducer,
     auth,
     favoritesReducer,
@@ -108,7 +108,7 @@ export const getIsFetchingAlbums = (state) => albumsGetters.getIsFetchingAlbums(
 export const getAlbumsByGenreId = (state) => albumsGetters.getAlbumsByGenreId(state.albumsReducer);
 export const getGenreWithAlbums = (state, id) => albumsGetters.getGenre(state.albumsReducer);
 export const getGenresWithAlbums = (state) => albumsGetters.getGenres(state.albumsReducer)
-export const getIsFetchingSelectedAlbum = (state) => artistsGetters.getIsFetchingSelectedAlbum(state.albumsReducer)
+export const getIsFetchingSelectedAlbum = (state) => albumsGetters.getIsFetchingSelectedAlbum(state.albumsReducer)
 export const getSelectedAlbum = (state) => albumsGetters.getSelectedAlbum(state.albumsReducer)
 
 

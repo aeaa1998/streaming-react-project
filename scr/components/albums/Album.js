@@ -22,7 +22,7 @@ const Trackitem = ({ navigation}) => {
 
     return (
         <View>
-        <Text>  Una Cancion </Text>
+        <Text style= {{ color : 'white' , borderColor: 'teal', borderWidth: 1, fontSize: 18, padding: 10, textAlign : 'center'}}>  Una Cancion </Text>
         </View>
 
 
@@ -37,7 +37,7 @@ const AlbumDetail = ({ selectedAlbum, navigation, isLoading, route, ...props }) 
     //     props.fetchArtist()
     // }, []);
 
-    // const isFavorite = (selectedAlbum) => props.favoriteAlbums.some(favoriteTrack => favoriteTrack.artist.id === selectedAlbum.id)
+    const isFavorite = (selectedAlbum) => props.favoriteAlbums.some(favoriteTrack => favoriteTrack.album.id === selectedAlbum.id)
 
     return (
         <BaseLoaderView
@@ -122,7 +122,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, { route, ...props }) => ({
     fetchAlbum: () => {
-        const { artistId } = route.params;
+        const { albumId } = route.params;
         dispatch(actions.startFetchSelectedAlbums(albumId))
     },
     addFavoriteAlbum: () => {

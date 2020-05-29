@@ -1,6 +1,3 @@
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { Dimensions, View, FlatList, StyleSheet, Text, TouchableHighlight, ImageBackground, Image } from 'react-native';
 import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView'
@@ -10,34 +7,35 @@ import { connect } from 'react-redux';
 // import * as actions from '../../actions/auth'
 import { imageHeader } from '../../styles/images';
 
-const TrackRow = ({ track, navigation, props }) => {
+
+const AlbumRow = ({ album, navigation, props }) => {
     return (<TouchableHighlight
         underlayColor='rgba(52, 52, 52, 0.2)'
         style={{ paddingHorizontal: 5, height: 60, paddingVertical: 5, flexDirection: 'row', marginVertical: 5, borderBottomWidth: 0.3 }}
         onPress={() => {
-            navigation.navigate('Tracks.Detail'
+            navigation.navigate('Album.Detail'
                 , {
-                    trackId: track.id,
+                    albumId: album.id,
                 });
         }}
     >
         <>
             <Image
                 resizeMode="contain"
-                source={{ uri: `https://picsum.photos/seed/${track.name}/40` }}
+                source={{ uri: `https://picsum.photos/seed/${album.title}/40` }}
                 style={{
                     flex: 0.2,
                 }}
             />
             <View style={{ flex: 0.8 }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{track.name}</Text>
-                <Text style={{ fontSize: 16 }}>Cancion por: {track.album.artist.name}</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{album.title}</Text>
             </View>
         </>
     </TouchableHighlight>);
 }
 
-const FavoriteTracks = ({ isLoading, favoriteTracks, profile, navigation, ...props }) => {
+
+const FavoriteAlbums = ({ isLoading, favoriteAlbums, profile, navigation, ...props }) => {
     const onPageLayout = (event) => {
         const { width, height } = event.nativeEvent.layout;
         setParentSize(height);
@@ -54,7 +52,7 @@ const FavoriteTracks = ({ isLoading, favoriteTracks, profile, navigation, ...pro
                     <FlatList
                         ListHeaderComponent={() => (<>
                             <ImageBackground
-                                source={{ uri: 'https://get.wallhere.com/photo/love-musical-instrument-photography-technology-piano-bokeh-Focus-keyboard-object-musical-keyboard-digital-piano-player-piano-electric-piano-fortepiano-spinet-product-design-musical-instrument-accessory-pianet-849231.jpg' }}
+                                source={{ uri: 'https://f4.bcbits.com/img/0015978885_10.jpg' }}
                                 onLayout={onPageLayout}
                                 style={{
                                     backgroundColor: 'gray', height: height * 0.25, resizeMode: 'cover',
@@ -77,16 +75,16 @@ const FavoriteTracks = ({ isLoading, favoriteTracks, profile, navigation, ...pro
                                 </ImageBackground>
                             </ImageBackground>
                             <Text style={{ marginTop: (squareImage / 2) + 30, fontSize: 20, marginBottom: 4, fontWeight: 'bold', width: '100%', textAlign: 'center' }}>
-                                Canciones favoritas
+                                Albums favoritos
                             </Text>
                             <Text style={{ fontSize: 18, marginBottom: 4, width: '100%', textAlign: 'center' }}>
                                 {profile.user.first_name} {profile.user.last_name}
                             </Text>
                         </>)}
-                        data={favoriteTracks}
+                        data={favoriteAlbums}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) =>
-                            <TrackRow track={item} navigation={navigation} />
+                            <AlbumRow album={item} navigation={navigation} />
                         }
                         keyExtractor={item => item.id}
                     />
@@ -108,7 +106,7 @@ const styles = StyleSheet.create(
 
 function mapStateToProps(state) {
     return {
-        favoriteTracks: selectors.getFavoritesFilteredByType(state, 'TrackFavorite').map(favorite => favorite.track),
+        favoriteAlbums: selectors.getFavoritesFilteredByType(state, 'AlbumFavorite').map(favorite => favorite.album),
         isLoading: selectors.getIsFetchingFavorites(state),
         profile: selectors.getUserProfile(state),
     };
@@ -117,5 +115,5 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     undefined,
-)(FavoriteTracks);
+)(FavoriteAlbums);
 
