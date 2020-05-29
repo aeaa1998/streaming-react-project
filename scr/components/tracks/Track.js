@@ -24,7 +24,7 @@ const Track = ({ selectedTrack, navigation, isLoading, addTrackToPlaylist, route
     }, []);
     const computedTrackInfo = () => {
         if (fetchCorrect()) {
-            return `${selectedTrack.album.artist.name} - ${selectedTrack.album.title}`
+            return ` Artist : ${selectedTrack.album.artist.name} \n Album : ${selectedTrack.album.title}`
         } else {
             return ''
         }

@@ -76,7 +76,7 @@ const GenreItem = ({ genre, artistsByGenreId, navigation, callback }) => {
                     // callback(genre.id)
                 }}
             >
-                <Text style={{ width: '100%', fontSize: 18, textAlign: 'left', fontWeight: '100', color: 'gray' }}>{genre.name}</Text>
+                <Text style={{ width: '100%', fontSize: 18, textAlign: 'center', fontWeight: '100', color: 'teal' }}> Artistas de {genre.name}</Text>
             </TouchableOpacity >
             <FlatList
                 data={genre.artists.map(id => artistsByGenreId[id])}

@@ -18,13 +18,22 @@ import { ScrollView, FlatList } from 'react-native-gesture-handler';
 const bg = 'rgb(40, 42, 54)'
 
 
-const Trackitem = ({ navigation}) => {
+const TrackItem = ({ track , navigation }) => {
 
     return (
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate('Track.Detail'
+                    , {
+                        trackId: track.id,
+                    });
+            }}
+        >
         <View>
-        <Text style= {{ color : 'white' , borderColor: 'teal', borderWidth: 1, fontSize: 18, padding: 10, textAlign : 'center'}}>  Una Cancion </Text>
+        <Text style= {{ color : 'white' , borderColor: 'teal', borderWidth: 1, fontSize: 18, padding: 10, textAlign : 'center'}}>  {track.name} </Text>
         </View>
 
+        </TouchableOpacity>
 
         );
 }
@@ -91,11 +100,18 @@ const AlbumDetail = ({ selectedAlbum, navigation, isLoading, route, ...props }) 
                         </Text>
                     </View>
 
-                    <Trackitem navigation={navigation} />
-                    <Trackitem navigation={navigation}  />
-                    <Trackitem navigation={navigation}  />
-                    <Trackitem navigation={navigation}  />
-
+                    <FlatList
+                        ListEmptyComponent={() => <Text
+                            numberOfColumns={1}
+                            style={{ width: width - 40, marginVertical: 10, paddingHorizontal: 20, fontSize: 18, color: 'white' }}>
+                            No tiene Canciones disponibles por el momento :(</Text>}
+                        data={_.sampleSize(selectedAlbum.tracks, 5)}
+                        horizontal={false}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) =>
+                            <TrackItem navigation={navigation} track={item} />
+                        }
+                    />
                 </ScrollView>)
             }
         >

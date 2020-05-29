@@ -25,10 +25,10 @@ const AlbumItem = ({ album, navigation }) => {
                 flexDirection: 'column',
             }}
             onPress={() => {
-                // navigation.navigate('Artist.Detail'
-                //     , {
-                //         artistId: artist.id,
-                //     });
+                navigation.navigate('Album.Detail'
+                    , {
+                        artistId: album.artist,
+                    });
             }}
         >
             <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -109,7 +109,7 @@ const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }
                         <Text style={{ color: 'white', fontSize: 18, fontWeight: '600', textAlign: 'center' }}>
                             Biografia
                         </Text>
-                        <Text style={{ color: 'white', fontSize: 16, marginVertical: 20, fontWeight: '600', textAlign: 'center' }}>
+                        <Text style={{ color: 'darkturquoise', fontSize: 16, marginVertical: 20, fontWeight: '600', textAlign: 'center' }}>
                             {selectedArtist.bio}
                         </Text>
                     </View>

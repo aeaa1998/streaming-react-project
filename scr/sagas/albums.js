@@ -22,7 +22,7 @@ function* fetchAlbums(action) {
             ToastAndroid.show(errorMsg, ToastAndroid.LONG)
             yield put(actions.failedFetchAlbums());
         }
-        yield handleResponse(list, 'albums/', onSuccess, onError)
+        yield handleResponse(list, 'albums', onSuccess, onError)
     } catch (error) {
         ToastAndroid.show(errorMsg, ToastAndroid.LONG)
         yield put(actions.failedFetchAlbums());

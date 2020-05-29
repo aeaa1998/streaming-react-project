@@ -4,6 +4,7 @@ import React from 'react'
 import { View } from 'react-native'
 import Main from './Main'
 import Album from './Album'
+import Track from '../tracks/Track'
 import { createStackNavigator, TransitionPresets, TransitionSpecs, HeaderStyleInterpolators, Header } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 const AlbumNavigator = () => {
@@ -26,6 +27,10 @@ const AlbumNavigator = () => {
             <Stack.Screen name="Album.Detail" component={Album}
                 options={{
                     title: 'Detalle del Album',
+                }} />
+            <Stack.Screen name="Track.Detail" component={Track}
+                options={{
+                    title: 'Detalle de la Cancion',
                 }} />
         </Stack.Navigator>
     )

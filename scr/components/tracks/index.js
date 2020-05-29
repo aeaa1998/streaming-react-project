@@ -15,8 +15,6 @@ const TracksNavigation = () => {
                 headerTransparent: true,
                 gestureEnabled: true,
                 headerTintColor: 'white',
-                // headerStyle: { backgroundColor: 'rgb(53, 54, 58)' },
-                // headerStyleInterpolator: HeaderStyleInterpolators.forStatic,
                 ...TransitionPresets.SlideFromRightIOS,
             }}
 

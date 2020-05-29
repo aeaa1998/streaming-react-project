@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
 
-import * as types from '../../types/artists';
+import * as types from '../../types/albums';
 import actions from 'redux-form/lib/actions';
 
 const albumsById= ( state = {}, action) =>{
@@ -20,6 +20,7 @@ const albumsById= ( state = {}, action) =>{
             return state;
         }
     }
+    return state;
 
 };
 
@@ -58,6 +59,8 @@ const genresById = (state = {} , action) => {
             return state;
         }
     }
+
+    return state;
 }
 
 const orderGenre = (state = [], action) => {

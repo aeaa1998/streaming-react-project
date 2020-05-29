@@ -60,7 +60,7 @@ const AlbumItem = ({ album, navigation }) => {
                 >{album.title}
 
                 </Text>
-                <Text style = {{color : 'darkslategrey'}}> {album.artist} </Text>
+                <Text style = {{color : 'darkslategrey'}}> {album.artist.name} </Text>
 
             </View>
         </TouchableOpacity>
