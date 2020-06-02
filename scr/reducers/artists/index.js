@@ -55,7 +55,7 @@ const artistsByGenreId = (state = {}, action) => {
     return state;
 };
 
-const genresById = (state = {}, action) => {
+const genresWithArtistsById = (state = {}, action) => {
     switch (action.type) {
         case types.FETCH_ARTISTS_BY_GENRE_STARTED: {
             return state;
@@ -171,7 +171,7 @@ const artistsReducer = combineReducers({
     isFetchingArtists,
     order,
     orderGenre,
-    genresById,
+    genresWithArtistsById,
     artistsByGenreId,
     isFetchingSelectedArtist,
     selectedArtist,
@@ -182,7 +182,7 @@ export default artistsReducer;
 export const getArtist = (state, id) => state.artistsById[id];
 export const getArtists = (state) => state.order.map(id => getArtist(state, id));
 export const getArtistsByGenreId = (state) => state.artistsByGenreId;
-export const getGenre = (state, id) => state.genresById[id];
+export const getGenre = (state, id) => state.genresWithArtistsById[id];
 export const getGenres = (state) => state.orderGenre.map(id => getGenre(state, id));
 export const getIsFetchingArtists = (state) => state.isFetchingArtists;
 export const getIsFetchingSelectedArtist = (state) => state.isFetchingSelectedArtist;

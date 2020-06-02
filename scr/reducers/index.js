@@ -28,7 +28,7 @@ const reducer = combineReducers({
     trackSelected,
     artistsReducer,
     selectedPlaylistReducer,
-    // form,
+    form: form,
 });
 
 

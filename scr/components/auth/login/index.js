@@ -19,8 +19,8 @@ const LoginView = ({ navigation, onSubmit, isLoading }) => {
             <ImageBackground source={image} style={styles.image}>
                 <ProgressLoader loadingLabel="Ingresando" visible={isLoading} />
                 <View style={styles.card}>
-                    {/* <LoginForm /> */}
-                    <View style={{ flexDirection: "column", flex: 1 }}>
+                    <LoginForm />
+                    {/* <View style={{ flexDirection: "column", flex: 1 }}>
                         <Text style={{ fontSize: 28, textAlign: "center" }} >Login</Text>
                         <View style={{ flex: 0.3, marginTop: 32 }} >
                             <Text style={{ fontSize: 16, textAlign: "left" }} >Usuario</Text>
@@ -51,7 +51,7 @@ const LoginView = ({ navigation, onSubmit, isLoading }) => {
                             </View>
                         </View>
 
-                    </View>
+                    </View> */}
 
                 </View>
             </ImageBackground>

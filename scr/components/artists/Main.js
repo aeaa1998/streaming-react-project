@@ -39,7 +39,7 @@ const ArtistItem = ({ artist, navigation }) => {
                 flexDirection: 'column',
             }}
             onPress={() => {
-                navigation.navigate('Artist.Detail'
+                navigation.push('Artist.Detail'
                     , {
                         artistId: artist.id,
                     });
@@ -82,7 +82,7 @@ const GenreItem = ({ genre, artistsByGenreId, navigation, callback }) => {
                 data={genre.artists.map(id => artistsByGenreId[id])}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={item => `${item.name}.${genre.name}`}
+                keyExtractor={item => `${item.id}.${genre.id}`}
                 renderItem={({ item }) => <ArtistItem artist={item} navigation={navigation} />}
             />
 
@@ -100,8 +100,8 @@ const ArtistsHome = ({ isLoading, route, navigation, genresWithArtists, artistsB
             isLoading={isLoading}
             style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', alignContent: 'center' }}
         >
-            <FlatList
 
+            <FlatList
                 showsVerticalScrollIndicator={false}
                 horizontal={false}
                 data={genresWithArtists}

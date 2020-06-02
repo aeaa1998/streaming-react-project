@@ -54,12 +54,14 @@ export const deleteAction = ({ url, id, data = undefined }, withAuth = true) => 
 };
 
 
-export const update = ({ url, id, data }, withAuth = true) =>
-    fetch(`${API_BASE_URL}/${url}/${id}/`, {
+export const update = ({ url, id = undefined, data }, withAuth = true) => {
+    const urlString = id ? `${API_BASE_URL}/${url}/${id}/` : `${API_BASE_URL}/${url}/`
+    return fetch(urlString, {
         method: 'PUT', // or 'PUT'
         body: JSON.stringify(data), // data can be `string` or {object}!
         headers: resolveHeaders(withAuth),
-    });
+    })
+};
 
 export const handleResponse = function* (method, parameters, onSuccess = function* (data, code) { }, onError = function* (response) { }) {
     const response = yield call(method, parameters);
