@@ -70,7 +70,8 @@ const GenreItem = ({ genre, albumsByGenreId, navigation, callback }) => {
                     // callback(genre.id)
                 }}
             >
-                <Text style={{ width: '100%', fontSize: 18, textAlign: 'center', fontWeight: '100', color: 'teal', borderColor: 'teal' }}>{genre.name} albums</Text>
+                <Text style={{ fontSize: 18, textAlign: 'left', fontWeight: '500', color: 'gray', marginLeft: 8, marginTop: 16 }}>
+                    Albums de genero {genre.name}</Text>
             </TouchableOpacity >
             <FlatList
                 data={genre.albums.map(id => albumsByGenreId[id])}
