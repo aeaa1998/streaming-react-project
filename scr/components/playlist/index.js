@@ -59,12 +59,14 @@ const PlaylistRow = ({ playlist, navigation, callback, ...props }) => {
 
 const Playlists = ({ isLoading, playlists, profile, navigation, ...props }) => {
     const { height, width } = Dimensions.get('window')
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
         props.fetchPlaylists()
+        setLoading(false)
     }, [])
     return (
         <BaseLoaderView
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             style={{ minHeight: height }}
             childrenView={() => (
                 <View>

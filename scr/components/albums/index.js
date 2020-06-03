@@ -2,14 +2,15 @@
 /* eslint-disable no-trailing-spaces */
 import React from 'react'
 import { View } from 'react-native'
+import Main from './Main'
+import Album from './Album'
+import Track from '../tracks/Track'
 import { createStackNavigator, TransitionPresets, TransitionSpecs, HeaderStyleInterpolators, Header } from '@react-navigation/stack';
-import TracksHome from './Main'
-import Track from './Track'
 const Stack = createStackNavigator();
-const TracksNavigation = () => {
+const AlbumNavigator = () => {
     return (
         <Stack.Navigator
-            initialRouteName="Tracks.Home"
+            initialRouteName="Albums.Home"
             headerMode="float"
             screenOptions={{
                 headerTransparent: true,
@@ -19,18 +20,22 @@ const TracksNavigation = () => {
             }}
 
         >
-            <Stack.Screen name="Tracks.Home" component={TracksHome}
-                initialParams={{ selectedGenre: 0, title: 'Canciones' }}
+            <Stack.Screen name="Albums.Home" component={Main}
                 options={{
                     title: '',
                 }} />
-            <Stack.Screen name="Tracks.Detail" component={Track}
+            <Stack.Screen name="Album.Detail" component={Album}
                 options={{
-                    title: 'Detalle de la canción',
+                    title: 'Detalle del Album',
                 }} />
-
+            <Stack.Screen name="Track.Detail" component={Track}
+                options={{
+                    title: 'Detalle de la Cancion',
+                }} />
         </Stack.Navigator>
     )
 }
 
-export default TracksNavigation
+
+
+export default AlbumNavigator

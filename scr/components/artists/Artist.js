@@ -25,10 +25,9 @@ const AlbumItem = ({ album, navigation }) => {
                 flexDirection: 'column',
             }}
             onPress={() => {
-                // navigation.navigate('Artist.Detail'
-                //     , {
-                //         artistId: artist.id,
-                //     });
+                navigation.navigate('Album.Detail', {
+                    albumId: album.id,
+                });
             }}
         >
             <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -49,20 +48,21 @@ const AlbumItem = ({ album, navigation }) => {
         </TouchableOpacity>
     );
 }
-const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }) => {
+const Artist = ({ selectedArtist, navigation, isLoading, route, ...props }) => {
     const { width, height } = Dimensions.get('window')
-
+    const [loading, setLoading] = useState(true)
     const fetchCorrect = () => !_.isEqual(selectedArtist, {})
-    // useEffect(() => {
-    //     props.fetchArtist()
-    // }, []);
+    useEffect(() => {
+        props.fetchArtist()
+        setLoading(false)
+    }, []);
 
     const isFavorite = (selectedArtist) => props.favoriteArtists.some(favoriteTrack => favoriteTrack.artist.id === selectedArtist.id)
 
     return (
         <BaseLoaderView
             fetchCorrectly={fetchCorrect()}
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             style={{ backgroundColor: bg, minHeight: '100%', paddingTop: useHeaderHeight() }}
             childrenView={() =>
                 (<ScrollView
@@ -134,14 +134,7 @@ const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }
     )
 }
 
-class Artist extends React.Component {
-    componentWillMount() {
-        this.props.fetchArtist()
-    }
-    render() {
-        return (<ArtistDetail {...this.props} />)
-    }
-}
+
 
 const mapStateToProps = (state, ownProps) => {
     return {

@@ -85,16 +85,20 @@ const watchFetchArtistsByGenre = function* () {
     );
 };
 
-const watchFetchSelectedArtistsByGenre = function* () {
+// const watchFetchSelectedArtistsByGenre = function* () {
+const watchFetchSelectedArtist = function* () {
     yield takeEvery(
         types.FETCH_SELECTED_ARTIST_STARTED,
         fetchSelectedArtist,
     );
 };
 
+
+
 export const watchers = [
     watchFetchArtists,
     watchFetchArtistsByGenre,
-    watchFetchSelectedArtistsByGenre,
+    // watchFetchSelectedArtistsByGenre,
+    watchFetchSelectedArtist,
 ];
 

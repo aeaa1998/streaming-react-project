@@ -59,7 +59,7 @@ const PlaylistTrackRow = ({ track, navigation, callback, ...props }) => {
     </TouchableHighlight>);
 }
 
-const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTracks, ...props }) => {
+const Playlist = ({ isLoading, playlist, profile, navigation, playlistTracks, ...props }) => {
     const onPageLayout = (event) => {
         const { width, height } = event.nativeEvent.layout;
         setParentSize(height);
@@ -68,9 +68,14 @@ const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTrac
     const { height, width } = Dimensions.get('window')
     const [parentSize, setParentSize] = useState(100);
     const [squareImage, setsquareImageSize] = useState(100);
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        props.fetchSelectedPlaylist()
+        setLoading(false)
+    }, [])
     return (
         <BaseLoaderView
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             style={{ minHeight: height }}
             childrenView={() => (
                 <View>
@@ -128,14 +133,6 @@ const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTrac
     );
 }
 
-class Playlist extends React.Component {
-    componentWillMount() {
-        this.props.fetchSelectedPlaylist()
-    }
-    render() {
-        return (<PlaylistDetail {...this.props} />)
-    }
-}
 const styles = StyleSheet.create(
     {
         imageHeader: { ...imageHeader },

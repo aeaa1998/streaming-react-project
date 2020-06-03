@@ -18,13 +18,15 @@ const bg = 'rgb(40, 42, 54)'
 const Track = ({ selectedTrack, navigation, isLoading, addTrackToPlaylist, route, ...props }) => {
     const { width, height } = Dimensions.get('window')
     const [modalVisible, setModalVisible] = useState(false)
+    const [loading, setLoading] = useState(true)
     const fetchCorrect = () => !_.isEqual(selectedTrack, {})
     useEffect(() => {
         props.fetchTrack()
+        setLoading(false)
     }, []);
     const computedTrackInfo = () => {
         if (fetchCorrect()) {
-            return `${selectedTrack.album.artist.name} - ${selectedTrack.album.title}`
+            return ` Artist : ${selectedTrack.album.artist.name} \n Album : ${selectedTrack.album.title}`
         } else {
             return ''
         }
@@ -34,7 +36,7 @@ const Track = ({ selectedTrack, navigation, isLoading, addTrackToPlaylist, route
     return (
         <BaseLoaderView
             fetchCorrectly={fetchCorrect()}
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             style={{ backgroundColor: bg, flex: 1, flexDirection: 'column', paddingTop: useHeaderHeight() }}
             childrenView={() =>
                 (<View

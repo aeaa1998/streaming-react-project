@@ -2,51 +2,88 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Text, Button, TextInput } from "react-native";
-import { Field, reduxForm, reset } from 'redux-form';
+import { Field, reduxForm, reset, getFormValues } from 'redux-form';
+import TextInputWrapper from '../../utils/Inputs/TextInputWrapper'
 const isRequired = value => value ? undefined : 'Este campo es obligatorio'
+const validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase()) ? undefined : 'El campo debe de ser un correo electronico válido.';
+}
 const afterSubmit = (result, dispatch) => dispatch(reset('register-form'))
-let Registerform = ({ navigation, ...props }) => {
+let RegisterForm = ({ navigation, all, invalid, isLoading, ...props }) => {
     return (
         <View style={{ flexDirection: "column", flex: 1 }}>
-            <Text style={{ fontSize: 28, textAlign: 'center' }}>Login</Text>
-            <View style={{ flex: 0.3, marginTop: 32 }}>
-                <Text style={{ fontSize: 16, textAlign: "left" }} >Ususario</Text>
-                <Field
-                    validate={[isRequired]}
-                    name={'username'}
-                    placeholder="Ingrese su usuario"
-                    style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
-                    component={TextInput}
-                />
-            </View>
-            <View style={{ flex: 0.3, marginTop: 16 }}>
-                <Text style={{ fontSize: 16, textAlign: "left" }} >Contraseña</Text>
-                <Field
-                    validate={[isRequired]}
-                    name={'password'}
-                    style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
-                    placeholder="Ingrese su contraseña"
-                    component={TextInput}
-                />
+            <Text style={{ fontSize: 28, textAlign: 'center' }}>Registrarse</Text>
+            <View style={{ flexDirection: 'column', flex: 0.9 }}>
+                <View style={{ flex: 1, marginTop: 16 }} >
+                    <Text style={{ fontSize: 16, textAlign: 'left' }} >Nombre</Text>
+                    <Field
+                        validate={[isRequired]}
+                        name={'name'}
+                        placeholder="Ingrese su usuario"
+                        style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                        component={TextInputWrapper}
+                    />
 
-            </View>
-            <View style={{ flex: 0.3 }}>
-                <View style={{ marginTop: 32 }}>
-                    <Button
-                        disabled={props.invalid || props.submitting}
-                        onPress={props.handleSubmit}
-                        title="Iniciar Sesion"
-                        color="#841584"
-                    />
                 </View>
-                <View style={{ marginTop: 16 }}>
-                    <Button
-                        disabled={props.submitting}
-                        onPress={() => navigation.navigate('Register')}
-                        title="Registrarse"
-                        color="#841584"
-                    />
+                <View style={{ flex: 1, marginTop: 10 }} >
+                    <Text style={{ fontSize: 16, textAlign: 'left' }} >Email</Text>
+                    <Field
+                        validate={[isRequired, validateEmail]}
+                        name={'email'}
+                        placeholder="Ingrese su correo"
+                        style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                        component={TextInputWrapper} />
+                </View>
+                <View style={{ flex: 1, marginTop: 10 }} >
+                    <Text style={{ fontSize: 16, textAlign: 'left' }} >Usuario</Text>
+                    <Field
+                        validate={[isRequired]}
+                        name={'username'}
+                        placeholder="Ingrese su usuario"
+                        style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                        component={TextInputWrapper} />
+                </View>
+                <View style={{ flex: 1, marginTop: 10 }} >
+                    <Text style={{ fontSize: 16, textAlign: 'left' }} >Contraseña</Text>
+                    <Field
+                        validate={[isRequired]}
+                        name={'password'}
+                        secureTextEntry={true}
+                        placeholder="Ingrese su contraseña"
+                        style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                        component={TextInputWrapper} />
+                </View>
+                <View style={{ flex: 1, marginTop: 10 }} >
+                    <Text style={{ fontSize: 16, textAlign: 'left' }} >Confirmación Contraseña</Text>
+                    <Field
+                        validate={[isRequired]}
+                        name={'passwordConfirmation'}
+                        secureTextEntry={true}
+                        placeholder="Ingrese su contraseña"
+                        style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
+                        component={TextInputWrapper} />
+                </View>
+
+                <View style={{ flex: 1 }}>
+                    <View style={{ marginTop: 32 }} >
+                        <Button
+                            disabled={invalid || isLoading}
+                            onPress={() => props.onSubmit(all)}
+                            title="Registrarse"
+                            color="#841584"
+                        />
+                    </View>
+                    <View style={{ marginTop: 16 }} >
+                        <Button
+                            disabled={isLoading}
+                            onPress={() => navigation.navigate('Login')}
+                            title="Volver"
+                            color="#841584"
+                        />
+                    </View>
                 </View>
             </View>
         </View >
@@ -54,9 +91,14 @@ let Registerform = ({ navigation, ...props }) => {
 }
 
 
-Registerform = reduxForm({
+RegisterForm = reduxForm({
     form: 'register-form',
     onSubmitSuccess: afterSubmit,
-})(Registerform)
+    enableReinitialize: true,
+})(RegisterForm)
 
-export default Registerform
+RegisterForm = connect(state => ({
+    all: getFormValues('register-form')(state),
+}))(RegisterForm);
+
+export default RegisterForm;

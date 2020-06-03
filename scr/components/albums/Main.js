@@ -7,7 +7,7 @@ import { View, FlatList, SectionList, StyleSheet, Dimensions, Text, ImageBackgro
 import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView';
 import { imageHeaderStyle } from '../../styles/images';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/artists';
+import * as actions from '../../actions/albums';
 import ImageHeader from '../utils/containers/Headers/ImageHeader';
 import * as selectors from '../../reducers';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -20,15 +20,8 @@ const headerGenre = {
     name: 'Todos'
 };
 const { width, height } = Dimensions.get('window');
-const getRandomColor = (seeder) => {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(seeder * 16)];
-    }
-    return color;
-};
-const ArtistItem = ({ artist, navigation }) => {
+
+const AlbumItem = ({ album, navigation }) => {
 
     return (
         <TouchableOpacity
@@ -39,15 +32,15 @@ const ArtistItem = ({ artist, navigation }) => {
                 flexDirection: 'column',
             }}
             onPress={() => {
-                navigation.push('Artist.Detail'
+                navigation.navigate('Album.Detail'
                     , {
-                        artistId: artist.id,
+                        albumId: album.id,
                     });
             }}
         >
             <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Image
-                    source={{ uri: `https://picsum.photos/seed/${artist.name}/400` }}
+                    source={{ uri: `https://picsum.photos/seed/${album.title}/400` }}
                     style={{
                         flex: 1,
                         margin: 5,
@@ -57,18 +50,19 @@ const ArtistItem = ({ artist, navigation }) => {
                 />
                 <Text
                     style={{ flex: 0.1, color: 'black', fontSize: 13, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
-                >{artist.name}
+                >{album.title} - {album.artist.name}
 
                 </Text>
+
             </View>
         </TouchableOpacity>
     );
 };
 
-const GenreItem = ({ genre, artistsByGenreId, navigation, callback }) => {
+const GenreItem = ({ genre, albumsByGenreId, navigation, callback }) => {
     return (
         <View
-            style={{ marginVertical: 15, paddingHorizontal: 0 }}
+            style={{ marginVertical: 5, paddingHorizontal: 0 }}
         >
             <TouchableOpacity
                 style={{ width: '100%' }}
@@ -76,37 +70,37 @@ const GenreItem = ({ genre, artistsByGenreId, navigation, callback }) => {
                     // callback(genre.id)
                 }}
             >
-                <Text style={{ width: '100%', fontSize: 18, textAlign: 'center', fontWeight: '100', color: 'teal' }}> Artistas de {genre.name}</Text>
+                <Text style={{ width: '100%', fontSize: 18, textAlign: 'center', fontWeight: '100', color: 'teal', borderColor: 'teal' }}>{genre.name} albums</Text>
             </TouchableOpacity >
             <FlatList
-                data={genre.artists.map(id => artistsByGenreId[id])}
+                data={genre.albums.map(id => albumsByGenreId[id])}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={item => `${item.id}.${genre.id}`}
-                renderItem={({ item }) => <ArtistItem artist={item} navigation={navigation} />}
+                renderItem={({ item }) => <AlbumItem album={item} navigation={navigation} />}
             />
 
         </View>
     );
 };
 
-const ArtistsHome = ({ isLoading, route, navigation, genresWithArtists, artistsByGenreId, fetchArtists, ...props }) => {
+const AlbumsHome = ({ isLoading, route, navigation, genresWithAlbums, albumsByGenreId, fetchAlbums, ...props }) => {
 
     useEffect(() => {
-        fetchArtists();
+        fetchAlbums();
     }, []);
     return (
         <BaseLoaderView
             isLoading={isLoading}
             style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', alignContent: 'center' }}
         >
-
             <FlatList
+
                 showsVerticalScrollIndicator={false}
                 horizontal={false}
-                data={genresWithArtists}
+                data={genresWithAlbums}
                 renderItem={({ item }) =>
-                    <GenreItem navigation={navigation} genre={item} artistsByGenreId={artistsByGenreId} />
+                    <GenreItem navigation={navigation} genre={item} albumsByGenreId={albumsByGenreId} />
                 }
                 keyExtractor={item => item.id} />
 
@@ -115,19 +109,19 @@ const ArtistsHome = ({ isLoading, route, navigation, genresWithArtists, artistsB
 };
 const mapStateToProps = (state, ownProps) => {
     return {
-        isLoading: selectors.getIsFetchingArtists(state),
-        genresWithArtists: selectors.getGenresWithArtists(state),
-        artistsByGenreId: selectors.getArtistsByGenreId(state),
+        isLoading: selectors.getIsFetchingAlbums(state),
+        genresWithAlbums: selectors.getGenresWithAlbums(state),
+        albumsByGenreId: selectors.getAlbumsByGenreId(state),
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    fetchArtists: () => {
-        dispatch(actions.startFetchArtistsByGenre());
+    fetchAlbums: () => {
+        dispatch(actions.startFetchAlbumsByGenre());
     },
 });
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(ArtistsHome);
+)(AlbumsHome);
 

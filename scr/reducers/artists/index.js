@@ -90,22 +90,6 @@ const orderGenre = (state = [], action) => {
 };
 
 
-const genreOrder = (state = [], action) => {
-    switch (action.type) {
-        case types.FETCH_ARTISTS_BY_GENRE_STARTED: {
-            return state;
-        }
-        case types.FETCH_ARTISTS_BY_GENRE_COMPLETED: {
-            const { entities, result } = action.payload;
-            return result;
-        }
-        case types.FETCH_ARTISTS_BY_GENRE_FAILED: {
-            return state;
-        }
-    }
-
-    return state;
-};
 
 const selectedArtist = (state = {}, action) => {
     switch (action.type) {
@@ -162,6 +146,7 @@ const isFetchingArtists = (state = false, action) => {
 
     return state;
 };
+
 
 
 

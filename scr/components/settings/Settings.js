@@ -39,6 +39,12 @@ const DATA = [
         icon: require('../../assets/images/isFavorite.png'),
     },
     {
+        id: 'favorite-albums',
+        title: 'Albums Favoritos',
+        route: 'Favorite.Albums',
+        icon: require('../../assets/images/isFavorite.png'),
+    },
+    {
         id: 'logout',
         title: 'Cerrar sesión',
         route: 'Logout',
