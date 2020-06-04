@@ -138,7 +138,7 @@ const TracksHome = ({ isLoadingTracks, isLoadingGenres, tracks, genres = [], rou
                                         setLoadingRows(true)
                                     }} />
                                 }
-                                keyExtractor={item => item.id} />
+                                keyExtractor={item => item.id.toString()} />
                             {header(title)}
                         </>)
                     }

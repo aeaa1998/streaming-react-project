@@ -59,7 +59,7 @@ const PlaylistTrackRow = ({ track, navigation, callback, ...props }) => {
     </TouchableHighlight>);
 }
 
-const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTracks, ...props }) => {
+const Playlist = ({ isLoading, playlist, profile, navigation, playlistTracks, ...props }) => {
     const onPageLayout = (event) => {
         const { width, height } = event.nativeEvent.layout;
         setParentSize(height);
@@ -68,9 +68,14 @@ const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTrac
     const { height, width } = Dimensions.get('window')
     const [parentSize, setParentSize] = useState(100);
     const [squareImage, setsquareImageSize] = useState(100);
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        props.fetchSelectedPlaylist()
+        setLoading(false)
+    }, [])
     return (
         <BaseLoaderView
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             style={{ minHeight: height }}
             childrenView={() => (
                 <View>
@@ -79,13 +84,13 @@ const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTrac
                         ListEmptyComponent={() => (
                             <View style={{ height: 300, width: '100%' }}>
                                 <Text style={{ fontSize: 26, fontWeight: 'bold', padding: 10, textAlign: 'center' }}>
-                                    Aun no se han agregado canciones a la playlist :(
+                                    Aun no se han agregado canciones a la playlist 
                                 </Text>
                             </View>
                         )}
                         ListHeaderComponent={() => (<>
                             <ImageBackground
-                                source={{ uri: 'https://cutewallpaper.org/21/eminem-desktop-wallpaper/Eminem-wallpapers-Music-HQ-Eminem-pictures-4K-Wallpapers-.jpg' }}
+                                source={{ uri: 'https://wallpaperaccess.com/full/1078877.jpg' }}
                                 onLayout={onPageLayout}
                                 style={{
                                     backgroundColor: 'gray', height: height * 0.25, resizeMode: 'cover',
@@ -111,7 +116,7 @@ const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTrac
                                 {playlist.name}
                             </Text>
                             <Text style={{ fontSize: 18, marginBottom: 4, width: '100%', textAlign: 'center' }}>
-                                {profile.user.first_name} {profile.user.last_name}
+                                - {profile.user.first_name} {profile.user.last_name}
                             </Text>
                         </>)}
                         data={playlist.tracks}
@@ -128,14 +133,6 @@ const PlaylistDetail = ({ isLoading, playlist, profile, navigation, playlistTrac
     );
 }
 
-class Playlist extends React.Component {
-    componentWillMount() {
-        this.props.fetchSelectedPlaylist()
-    }
-    render() {
-        return (<PlaylistDetail {...this.props} />)
-    }
-}
 const styles = StyleSheet.create(
     {
         imageHeader: { ...imageHeader },

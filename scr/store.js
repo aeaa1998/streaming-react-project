@@ -23,7 +23,6 @@ export const configureStore = () => {
         reducer,
     );
 
-    console.log(persistedReducer)
     const store = createStore(persistedReducer, applyMiddleware(sagaMiddleware));
     // const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 

@@ -70,7 +70,7 @@ function* changePassword(action) {
             yield put(actions.changePasswordFailed());
             acceptDialog("Credenciales invalidas", "La contraseña es inválida")
         }
-        yield handleResponse(update, { url: 'profiles/change/password/', data: action.payload }, onSuccess, onError)
+        yield handleResponse(update, { url: 'profiles/change/password', data: action.payload }, onSuccess, onError)
     } catch (e) {
         acceptDialog("Error", "No se pudo cambiar la contraseña")
     }

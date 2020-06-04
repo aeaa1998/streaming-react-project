@@ -42,7 +42,7 @@ export const registerFailed = () => (
 export const changePasswordStarted = ({ oldPassword, newPassword }, callback) => (
     {
         type: types.CHANGE_PASSWORD_STARTED,
-        payload: { oldPassword, newPassword },
+        payload: { oldPassword: oldPassword, newPassword: newPassword },
         callback: callback,
     }
 );

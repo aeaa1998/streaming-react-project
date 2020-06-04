@@ -25,10 +25,9 @@ const AlbumItem = ({ album, navigation }) => {
                 flexDirection: 'column',
             }}
             onPress={() => {
-                navigation.navigate('Album.Detail'
-                    , {
-                        artistId: album.artist,
-                    });
+                navigation.navigate('Album.Detail', {
+                    albumId: album.id,
+                });
             }}
         >
             <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -49,20 +48,21 @@ const AlbumItem = ({ album, navigation }) => {
         </TouchableOpacity>
     );
 }
-const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }) => {
+const Artist = ({ selectedArtist, navigation, isLoading, route, ...props }) => {
     const { width, height } = Dimensions.get('window')
-
+    const [loading, setLoading] = useState(true)
     const fetchCorrect = () => !_.isEqual(selectedArtist, {})
-    // useEffect(() => {
-    //     props.fetchArtist()
-    // }, []);
+    useEffect(() => {
+        props.fetchArtist()
+        setLoading(false)
+    }, []);
 
     const isFavorite = (selectedArtist) => props.favoriteArtists.some(favoriteTrack => favoriteTrack.artist.id === selectedArtist.id)
 
     return (
         <BaseLoaderView
             fetchCorrectly={fetchCorrect()}
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             style={{ backgroundColor: bg, minHeight: '100%', paddingTop: useHeaderHeight() }}
             childrenView={() =>
                 (<ScrollView
@@ -109,7 +109,7 @@ const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }
                         <Text style={{ color: 'white', fontSize: 18, fontWeight: '600', textAlign: 'center' }}>
                             Biografia
                         </Text>
-                        <Text style={{ color: 'darkturquoise', fontSize: 16, marginVertical: 20, fontWeight: '600', textAlign: 'center' }}>
+                        <Text style={{ color: 'white', fontSize: 16, marginVertical: 20, fontWeight: '600', textAlign: 'center' }}>
                             {selectedArtist.bio}
                         </Text>
                     </View>
@@ -121,7 +121,7 @@ const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }
                             No tiene albumes disponibles por el momento :(</Text>}
                         data={_.sampleSize(selectedArtist.albums, 5)}
                         horizontal={true}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) =>
                             <AlbumItem navigation={navigation} album={item} />
                         }
@@ -134,14 +134,7 @@ const ArtistDetail = ({ selectedArtist, navigation, isLoading, route, ...props }
     )
 }
 
-class Artist extends React.Component {
-    componentWillMount() {
-        this.props.fetchArtist()
-    }
-    render() {
-        return (<ArtistDetail {...this.props} />)
-    }
-}
+
 
 const mapStateToProps = (state, ownProps) => {
     return {

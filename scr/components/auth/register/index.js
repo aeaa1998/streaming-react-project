@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { View, Text, Dimensions, ImageBackground, StyleSheet, TextInput, Button } from 'react-native';
 import { ProgressLoader } from '../../utils/Loaders/ProgressLoader'
 import * as selectors from '../../../reducers';
+import RegisterForm from './RegisterForm'
 const validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -26,52 +27,7 @@ const RegisterView = ({ navigation, isLoading, onSubmit }) => {
             <ImageBackground source={image} style={styles.image}>
                 <ProgressLoader loadingLabel="Registrando usuario" visible={isLoading} />
                 <View style={styles.card}>
-                    <Text style={{ fontSize: 28, textAlign: 'center' }} >Registrarse</Text>
-                    <View style={{ flexDirection: 'column', flex: 0.9 }}>
-                        <View style={{ flex: 1, marginTop: 16 }} >
-                            <Text style={{ fontSize: 16, textAlign: 'left' }} >Nombre</Text>
-                            <TextInput value={name} onChangeText={(text) => setName(text)} placeholder="Ingrese su nombre" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 1, marginTop: 24 }} >
-                            <Text style={{ fontSize: 16, textAlign: 'left' }} >Email</Text>
-                            <TextInput value={email} onChangeText={(text) => setEmail(text)} placeholder="Ingrese su correo" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 1, marginTop: 24 }} >
-                            <Text style={{ fontSize: 16, textAlign: 'left' }} >Usuario</Text>
-                            <TextInput value={username} onChangeText={(text) => setUsername(text)} placeholder="Ingrese su usuario" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 1, marginTop: 24 }} >
-                            <Text style={{ fontSize: 16, textAlign: 'left' }} >Contraseña</Text>
-                            <TextInput value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} placeholder="Ingrese su contraseña" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 1, marginTop: 24 }} >
-                            <Text style={{ fontSize: 16, textAlign: 'left' }} >Confirmación Contraseña</Text>
-                            <TextInput value={passwordConfirmation} onChangeText={(text) => setPasswordConfirmation(text)} secureTextEntry={true} placeholder="Confirme su contraseña" style={{ marginTop: 8, fontSize: 16, borderColor: 'gray', borderWidth: 1 }}
-                            />
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <View style={{ marginTop: 32 }} >
-                                <Button
-                                    onPress={() => onSubmit(username, password, passwordConfirmation, name, email)}
-                                    title="Registrarse"
-                                    color="#841584"
-                                />
-                            </View>
-                            <View style={{ marginTop: 16 }} >
-                                <Button
-                                    onPress={() => navigation.navigate('Login')}
-                                    title="Volver"
-                                    color="#841584"
-                                />
-                            </View>
-                        </View>
-
-                    </View>
-
+                    <RegisterForm navigation={navigation} isLoading={isLoading} onSubmit={onSubmit} />
                 </View>
             </ImageBackground>
         </View >
@@ -112,7 +68,7 @@ export default connect(
         isLoading: selectors.getIsRegistering(state),
     }),
     dispatch => ({
-        onSubmit(username, password, passwordConfirmation, name, email) {
+        onSubmit({ username, password, passwordConfirmation, name, email }) {
             if (username == '' || password == '' || passwordConfirmation == '' || name == '' || email == '') {
                 acceptDialog('Campos faltantes', 'Debe de llenar todos los campos');
                 return;

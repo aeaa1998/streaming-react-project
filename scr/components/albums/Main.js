@@ -20,14 +20,7 @@ const headerGenre = {
     name: 'Todos'
 };
 const { width, height } = Dimensions.get('window');
-const getRandomColor = (seeder) => {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(seeder * 16)];
-    }
-    return color;
-};
+
 const AlbumItem = ({ album, navigation }) => {
 
     return (
@@ -57,10 +50,14 @@ const AlbumItem = ({ album, navigation }) => {
                 />
                 <Text
                     style={{ flex: 0.1, color: 'black', fontSize: 13, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
-                >{album.title}
+                >{album.title} 
 
                 </Text>
-                <Text style = {{color : 'darkslategrey'}}> {album.artist.name} </Text>
+                <Text
+                    style={{ flex: 0.1, color: 'black', fontSize: 11, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
+                > by : {album.artist.name}
+
+                </Text>
 
             </View>
         </TouchableOpacity>
@@ -70,7 +67,7 @@ const AlbumItem = ({ album, navigation }) => {
 const GenreItem = ({ genre, albumsByGenreId, navigation, callback }) => {
     return (
         <View
-            style={{ marginVertical: 15, paddingHorizontal: 10 }}
+            style={{ marginVertical: 5, paddingHorizontal: 0 }}
         >
             <TouchableOpacity
                 style={{ width: '100%' }}
@@ -78,13 +75,14 @@ const GenreItem = ({ genre, albumsByGenreId, navigation, callback }) => {
                     // callback(genre.id)
                 }}
             >
-                <Text style={{ width: '100%', fontSize: 18, textAlign: 'center', fontWeight: '100', color: 'teal', borderColor: 'teal' }}>{genre.name} albums</Text>
+                <Text style={{ fontSize: 18, textAlign: 'left', fontWeight: '500', color: 'gray', marginLeft: 8, marginTop: 16 }}>
+                    Albums de {genre.name}</Text>
             </TouchableOpacity >
             <FlatList
                 data={genre.albums.map(id => albumsByGenreId[id])}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                keyExtractor={item => `${item.name}.${genre.name}`}
+                keyExtractor={item => `${item.id}.${genre.id}`}
                 renderItem={({ item }) => <AlbumItem album={item} navigation={navigation} />}
             />
 
@@ -110,7 +108,7 @@ const AlbumsHome = ({ isLoading, route, navigation, genresWithAlbums, albumsByGe
                 renderItem={({ item }) =>
                     <GenreItem navigation={navigation} genre={item} albumsByGenreId={albumsByGenreId} />
                 }
-                keyExtractor={item => item.id} />
+                keyExtractor={item => item.id.toString()} />
 
         </BaseLoaderView>
     );

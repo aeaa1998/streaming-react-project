@@ -15,7 +15,7 @@ const BaseLoaderView = ({ style = {}, isLoading = false, fetchCorrectly = true, 
                     flex: 1,
                     justifyContent: 'center'
                 }}>
-                    <ActivityIndicator size="large" color="gray" />
+                    <ActivityIndicator size="large" color="teal" />
                 </View>)
             } else if (fetchCorrectly) {
                 return childrenView ? childrenView() : props.children

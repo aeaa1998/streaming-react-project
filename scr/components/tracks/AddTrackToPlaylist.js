@@ -47,7 +47,7 @@ const AddTrackToPlaylist = ({ visible, playlists,
                             flex: 0.1,
                             flexDirection: 'row', borderBottomWidth: 2, borderBottomColor: 'gray'
                         }}>
-                            <Text style={{ paddingHorizontal: 12, textAlign: 'left', textAlignVertical: 'center', fontSize: 18, flex: 0.85 }} >Escoge una playlist</Text>
+                            <Text style={{ paddingHorizontal: 12, textAlign: 'center', textAlignVertical: 'center', fontSize: 18, flex: 0.85 }} >Escoge una playlist</Text>
                             <TouchableHighlight
                                 underlayColor='rgba(52, 52, 52, 0.3)'
                                 onPress={() => setStateCallback(false)}
@@ -71,8 +71,8 @@ const AddTrackToPlaylist = ({ visible, playlists,
                                     (<View
                                         style={{ flex: 1 }}>
                                         <Text
-                                            style={{ textAlignVertical: 'center', textAlign: 'center', fontSize: 22 }}
-                                        >No se encontro resultados :C</Text>
+                                            style={{ textAlignVertical: 'center', color : 'crimson', textAlign: 'center', fontSize: 22 }}
+                                        >Parece que aun no tines playlists  </Text>
                                     </View>)
                                 }
                                 data={playlists}

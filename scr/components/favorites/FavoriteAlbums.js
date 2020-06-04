@@ -1,8 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { Dimensions, View, FlatList, StyleSheet, Text, TouchableHighlight, ImageBackground, Image } from 'react-native';
-import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView'
+import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView';
 import { elevation } from '../../styles/shadows';
-import * as selectors from '../../reducers'
+import * as selectors from '../../reducers';
 import { connect } from 'react-redux';
 // import * as actions from '../../actions/auth'
 import { imageHeader } from '../../styles/images';
@@ -10,13 +12,12 @@ import { imageHeader } from '../../styles/images';
 
 const AlbumRow = ({ album, navigation, props }) => {
     return (<TouchableHighlight
-        underlayColor='rgba(52, 52, 52, 0.2)'
+        underlayColor="rgba(52, 52, 52, 0.2)"
         style={{ paddingHorizontal: 5, height: 60, paddingVertical: 5, flexDirection: 'row', marginVertical: 5, borderBottomWidth: 0.3 }}
         onPress={() => {
-            navigation.navigate('Album.Detail'
-                , {
-                    albumId: album.id,
-                });
+            navigation.navigate('Album.Detail', {
+                albumId: album.id,
+            });
         }}
     >
         <>
@@ -32,7 +33,7 @@ const AlbumRow = ({ album, navigation, props }) => {
             </View>
         </>
     </TouchableHighlight>);
-}
+};
 
 
 const FavoriteAlbums = ({ isLoading, favoriteAlbums, profile, navigation, ...props }) => {
@@ -41,7 +42,7 @@ const FavoriteAlbums = ({ isLoading, favoriteAlbums, profile, navigation, ...pro
         setParentSize(height);
         setsquareImageSize(height * 0.7);
     };
-    const { height, width } = Dimensions.get('window')
+    const { height, width } = Dimensions.get('window');
     const [parentSize, setParentSize] = useState(100);
     const [squareImage, setsquareImageSize] = useState(100);
     return (
@@ -71,8 +72,7 @@ const FavoriteAlbums = ({ isLoading, favoriteAlbums, profile, navigation, ...pro
                                         alignSelf: 'center',
 
                                     }}
-                                >
-                                </ImageBackground>
+                                />
                             </ImageBackground>
                             <Text style={{ marginTop: (squareImage / 2) + 30, fontSize: 20, marginBottom: 4, fontWeight: 'bold', width: '100%', textAlign: 'center' }}>
                                 Albums favoritos
@@ -93,14 +93,14 @@ const FavoriteAlbums = ({ isLoading, favoriteAlbums, profile, navigation, ...pro
             )}
         />
     );
-}
+};
 const styles = StyleSheet.create(
     {
         imageHeader: { ...imageHeader },
         profilePicElevation: elevation['12'],
         modalView: {
             height: 150, width: '80%', backgroundColor: 'white', padding: 10,
-        }
+        },
     }
 );
 
