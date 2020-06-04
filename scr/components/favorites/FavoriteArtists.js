@@ -88,7 +88,7 @@ const FavoriteArtists = ({ isLoading, favoriteArtists, profile, navigation, ...p
                         renderItem={({ item }) =>
                             <ArtistRow artist={item} navigation={navigation} />
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                     />
 
                 </View>

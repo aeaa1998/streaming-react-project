@@ -88,7 +88,7 @@ const FavoriteTracks = ({ isLoading, favoriteTracks, profile, navigation, ...pro
                         renderItem={({ item }) =>
                             <TrackRow track={item} navigation={navigation} />
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                     />
 
                 </View>
