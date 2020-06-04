@@ -99,7 +99,7 @@ const Playlists = ({ isLoading, playlists, profile, navigation, ...props }) => {
                         renderItem={({ item }) =>
                             <PlaylistRow playlist={item} navigation={navigation} callback={props.deletePlayList} />
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                     />
 
                 </View>

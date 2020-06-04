@@ -48,7 +48,7 @@ const TrackItem = ({ track, navigation, album }) => {
             />
             <View style={{ flex: 0.8 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{track.name}</Text>
-                <Text style = {{fontSize : 12 ,color: "crimson" , fontWeight:' bold'}}> {hasExplicitLyrics(track)} </Text>
+                <Text style = {{fontSize : 12 ,color: "crimson" , fontWeight: 'bold'}}> {hasExplicitLyrics(track)} </Text>
             </View>
         </>
     </TouchableHighlight>);
