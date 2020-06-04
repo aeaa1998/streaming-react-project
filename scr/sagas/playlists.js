@@ -88,7 +88,6 @@ function* deleteTrackFromPlaylist(action) {
             { url: 'playlists/delete/track', id: action.payload.playlistId, data: { track: action.payload.trackId } },
             onSuccess, onError)
     } catch (error) {
-        console.log(error)
         ToastAndroid.show(errorMsg, ToastAndroid.LONG)
         yield put(actions.failedDeletePlaylists());
     }
@@ -126,7 +125,6 @@ function* fetchSelectedPlaylist(action) {
         }
         yield handleResponse(retrieve, { url: 'playlists', id: action.payload.id }, onSuccess, onError)
     } catch (error) {
-        console.log(error)
         ToastAndroid.show(errorMsg, ToastAndroid.LONG)
         yield put(actions.failedFetchSelectedPlaylist());
     }

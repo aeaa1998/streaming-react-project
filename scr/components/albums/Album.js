@@ -26,7 +26,7 @@ const TrackItem = ({ track, navigation, album }) => {
     }
     return (<TouchableHighlight
         underlayColor='rgba(52, 52, 52, 0.2)'
-        style={{ paddingHorizontal: 5, height: 60, paddingVertical: 5, flexDirection: 'row', marginVertical: 5, borderBottomWidth: 0.3 }}
+        style={{ paddingHorizontal: 5, height: 60, paddingVertical: 5, flexDirection: 'row', borderBottomWidth: 0.3 }}
         onPress={() => {
             navigation.navigate('Tracks.Detail'
                 , {

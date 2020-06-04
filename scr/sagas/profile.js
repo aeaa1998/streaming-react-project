@@ -46,7 +46,6 @@ function* updateProfile(action) {
     try {
         const currentProfile = yield select(selectors.getUserProfile)
         const onSuccess = function* (profile, code) {
-            console.log(profile)
             yield put(actions.completeUpdateProfile(profile));
             ToastAndroid.show('Se cambio con exito el número de telefono', ToastAndroid.LONG)
         }

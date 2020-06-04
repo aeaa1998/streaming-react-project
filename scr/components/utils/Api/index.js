@@ -80,7 +80,6 @@ export const handleResponse = function* (method, parameters, onSuccess = functio
             const tokenResponse = yield call(create, { url: 'token-refresh/', data: { token: token } }, false);
             if (tokenResponse.status >= 200 && tokenResponse.status <= 299) {
                 const { token } = yield tokenResponse.json();
-                console.log(token)
                 yield put(actions.completeLogin(token));
                 yield handleResponse(method, parameters, onSuccess, onError);
             } else {
