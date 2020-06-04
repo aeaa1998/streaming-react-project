@@ -108,7 +108,7 @@ const ArtistsHome = ({ isLoading, route, navigation, genresWithArtists, artistsB
                 renderItem={({ item }) =>
                     <GenreItem navigation={navigation} genre={item} artistsByGenreId={artistsByGenreId} />
                 }
-                keyExtractor={item => item.id} />
+                keyExtractor={item => item.id.toString()} />
 
         </BaseLoaderView>
     );

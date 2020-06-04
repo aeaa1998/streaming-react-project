@@ -50,7 +50,12 @@ const AlbumItem = ({ album, navigation }) => {
                 />
                 <Text
                     style={{ flex: 0.1, color: 'black', fontSize: 13, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
-                >{album.title} - {album.artist.name}
+                >{album.title} 
+
+                </Text>
+                <Text
+                    style={{ flex: 0.1, color: 'black', fontSize: 11, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
+                > by : {album.artist.name}
 
                 </Text>
 
@@ -71,7 +76,7 @@ const GenreItem = ({ genre, albumsByGenreId, navigation, callback }) => {
                 }}
             >
                 <Text style={{ fontSize: 18, textAlign: 'left', fontWeight: '500', color: 'gray', marginLeft: 8, marginTop: 16 }}>
-                    Albums de genero {genre.name}</Text>
+                    Albums de {genre.name}</Text>
             </TouchableOpacity >
             <FlatList
                 data={genre.albums.map(id => albumsByGenreId[id])}
@@ -103,7 +108,7 @@ const AlbumsHome = ({ isLoading, route, navigation, genresWithAlbums, albumsByGe
                 renderItem={({ item }) =>
                     <GenreItem navigation={navigation} genre={item} albumsByGenreId={albumsByGenreId} />
                 }
-                keyExtractor={item => item.id} />
+                keyExtractor={item => item.id.toString()} />
 
         </BaseLoaderView>
     );

@@ -61,7 +61,7 @@ const SettingsStack = (props) => {
                         >
                             <Image
                                 resizeMode="contain"
-                                source={require('../../assets/images/edit.png')}
+                                source={require('../../assets/images/edit_white.png')}
                                 style={{
                                     width: 20,
                                     height: 30,

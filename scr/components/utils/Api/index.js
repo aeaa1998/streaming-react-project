@@ -10,7 +10,8 @@ import {
     put,
     select,
 } from 'redux-saga/effects';
-const prefix = 'https://25847ac47173.ngrok.io';
+const prefix = 'https://db8beef805ed.ngrok.io';
+//const prefix = 'https://strme-api.herokuapp.com';
 const API_BASE_URL = `${prefix}/api`;
 
 function selectToken(state) {

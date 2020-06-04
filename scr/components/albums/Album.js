@@ -19,9 +19,13 @@ const bg = 'rgb(40, 42, 54)'
 
 
 const TrackItem = ({ track, navigation, album }) => {
-    const computedArtistName = (album) => {
-        if (album.artist) {
-            return <Text style={{ fontSize: 16 }}>Cancion por: {album.artist.name}</Text>
+    
+    const hasExplicitLyrics = (track) => {
+        if(track.explicit_lyrics ===1) {
+            return "Explicit Lyrics" 
+        }
+        else {
+            return ""
         }
     }
     return (<TouchableHighlight
@@ -44,7 +48,7 @@ const TrackItem = ({ track, navigation, album }) => {
             />
             <View style={{ flex: 0.8 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{track.name}</Text>
-                {computedArtistName(album)}
+                <Text style = {{fontSize : 12 ,color: "crimson" , fontWeight: 'bold'}}> {hasExplicitLyrics(track)} </Text>
             </View>
         </>
     </TouchableHighlight>);
@@ -60,11 +64,20 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
         props.fetchAlbum()
         setLoading(false)
     }, [])
+    const additionalInfo =()=>{
+        if(selectedAlbum.price || selectedAlbum.created_at){
+            return `Price : Q ${selectedAlbum.price.toFixed(2)} \n Published on : ${moment(selectedAlbum.created_at).locale('es').format('lll')}`
+
+        }
+        else 
+            return ""
+        
+    }
     return (
         <BaseLoaderView
             fetchCorrectly={fetchCorrect()}
             isLoading={isLoading || loading}
-            style={{ backgroundColor: bg, minHeight: '100%', paddingTop: useHeaderHeight() }}
+            style={{ backgroundColor: bg, minHeight: '100%', paddingTop: useHeaderHeight()}}
             childrenView={() =>
                 (<ImageBackground
                     source={require('../../assets/images/gradientbg.png')}
@@ -96,7 +109,13 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
                                     </View>
                                     <View style={{ marginTop: 25, flexDirection: 'column' }}>
                                         <Text style={{ color: 'white', flex: 1, fontSize: 20, fontWeight: '600', textAlign: 'center' }}>
-                                            {selectedAlbum.title}
+                                            {selectedAlbum.title} 
+                                        </Text>
+                                        <Text style={{ color: 'white', flex: 1, fontSize: 15, fontWeight: '600', textAlign: 'center' }}>
+                                           by : {selectedAlbum.artist.name} 
+                                        </Text>
+                                        <Text style={{ color: 'gray', fontSize: 12, textAlign: 'center' }}>
+                                        {additionalInfo()}
                                         </Text>
                                     </View>
                                     <View style={{ height: 30, marginVertical: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -128,7 +147,7 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
                             style={{ width: width - 40, marginVertical: 10, paddingHorizontal: 20, fontSize: 18, color: 'white' }}>
                             No tiene Canciones disponibles por el momento :(</Text>}
                         horizontal={false}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                         data={selectedAlbum.tracks}
                         renderItem={({ item }) =>
                             <TrackItem navigation={navigation} track={item} album={selectedAlbum} />

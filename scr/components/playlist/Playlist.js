@@ -84,13 +84,13 @@ const Playlist = ({ isLoading, playlist, profile, navigation, playlistTracks, ..
                         ListEmptyComponent={() => (
                             <View style={{ height: 300, width: '100%' }}>
                                 <Text style={{ fontSize: 26, fontWeight: 'bold', padding: 10, textAlign: 'center' }}>
-                                    Aun no se han agregado canciones a la playlist :(
+                                    Aun no se han agregado canciones a la playlist 
                                 </Text>
                             </View>
                         )}
                         ListHeaderComponent={() => (<>
                             <ImageBackground
-                                source={{ uri: 'https://cutewallpaper.org/21/eminem-desktop-wallpaper/Eminem-wallpapers-Music-HQ-Eminem-pictures-4K-Wallpapers-.jpg' }}
+                                source={{ uri: 'https://wallpaperaccess.com/full/1078877.jpg' }}
                                 onLayout={onPageLayout}
                                 style={{
                                     backgroundColor: 'gray', height: height * 0.25, resizeMode: 'cover',
@@ -116,7 +116,7 @@ const Playlist = ({ isLoading, playlist, profile, navigation, playlistTracks, ..
                                 {playlist.name}
                             </Text>
                             <Text style={{ fontSize: 18, marginBottom: 4, width: '100%', textAlign: 'center' }}>
-                                {profile.user.first_name} {profile.user.last_name}
+                                - {profile.user.first_name} {profile.user.last_name}
                             </Text>
                         </>)}
                         data={playlist.tracks}

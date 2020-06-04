@@ -86,7 +86,7 @@ const FavoriteAlbums = ({ isLoading, favoriteAlbums, profile, navigation, ...pro
                         renderItem={({ item }) =>
                             <AlbumRow album={item} navigation={navigation} />
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                     />
 
                 </View>

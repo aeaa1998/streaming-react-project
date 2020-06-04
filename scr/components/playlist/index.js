@@ -81,17 +81,17 @@ const Playlists = ({ isLoading, playlists, profile, navigation, ...props }) => {
                         )}
                         ListHeaderComponent={() => (<>
                             <ImageBackground
-                                source={{ uri: 'https://wallpaperaccess.com/full/628807.jpg' }}
+                                source={{ uri: 'http://wallpapercrafter.com/uploads/posts/45761-___concert-crowd-performance-and-people-hd.jpg' }}
                                 style={{
                                     backgroundColor: 'gray', height: height * 0.30, resizeMode: 'cover',
                                     justifyContent: 'center',
                                 }}>
                                 <Text
-                                    style={{ fontSize: 30, color: 'white', textAlign: 'center', textAlignVertical: 'center' }}
+                                    style={{ fontSize: 30, color: 'white', textAlign: 'center',textShadowColor: 'black',textShadowRadius: 15, textAlignVertical: 'bottom' }}
                                 >Playlists</Text>
                                 <Text
-                                    style={{ fontSize: 18, color: 'white', textAlign: 'center', textAlignVertical: 'center' }}
-                                >de {profile.user.first_name} {profile.user.last_name}</Text>
+                                    style={{ fontSize: 18, color: 'white', textAlign: 'center', textAlignVertical: 'bottom',textShadowColor: 'black',textShadowRadius: 15 }}
+                                >de  {profile.user.first_name} {profile.user.last_name}</Text>
                             </ImageBackground>
                         </>)}
                         data={playlists}
@@ -99,7 +99,7 @@ const Playlists = ({ isLoading, playlists, profile, navigation, ...props }) => {
                         renderItem={({ item }) =>
                             <PlaylistRow playlist={item} navigation={navigation} callback={props.deletePlayList} />
                         }
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                     />
 
                 </View>

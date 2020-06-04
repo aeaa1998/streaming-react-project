@@ -121,7 +121,7 @@ const Artist = ({ selectedArtist, navigation, isLoading, route, ...props }) => {
                             No tiene albumes disponibles por el momento :(</Text>}
                         data={_.sampleSize(selectedArtist.albums, 5)}
                         horizontal={true}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) =>
                             <AlbumItem navigation={navigation} album={item} />
                         }
