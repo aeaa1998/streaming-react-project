@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import BaseLoaderView from '../utils/containers/Bases/BaseLoaderView';
 import moment from 'moment'
 import * as actions from '../../actions/artists'
-
+import { v4 } from 'uuid'
 import * as favoriteActions from '../../actions/favorites'
 import * as selectors from '../../reducers'
 import { useHeaderHeight } from '@react-navigation/stack';
@@ -25,9 +25,10 @@ const AlbumItem = ({ album, navigation }) => {
                 flexDirection: 'column',
             }}
             onPress={() => {
-                navigation.navigate('Album.Detail', {
-                    albumId: album.id,
-                });
+                navigation.push('Album.Detail',
+                    {
+                        albumId: album.id,
+                    });
             }}
         >
             <View style={{ flex: 1, flexDirection: 'column' }}>

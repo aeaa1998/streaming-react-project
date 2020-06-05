@@ -15,7 +15,7 @@ const TrackRow = ({ track, navigation, props }) => {
         underlayColor='rgba(52, 52, 52, 0.2)'
         style={{ paddingHorizontal: 5, height: 60, paddingVertical: 5, flexDirection: 'row', borderBottomWidth: 0.3 }}
         onPress={() => {
-            navigation.navigate('Tracks.Detail'
+            navigation.navigate('Track.Detail'
                 , {
                     trackId: track.id,
                 });

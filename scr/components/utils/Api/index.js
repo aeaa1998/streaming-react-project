@@ -10,7 +10,7 @@ import {
     put,
     select,
 } from 'redux-saga/effects';
-const prefix = 'https://db8beef805ed.ngrok.io';
+const prefix = 'https://9ae0d322c734.ngrok.io';
 //const prefix = 'https://strme-api.herokuapp.com';
 const API_BASE_URL = `${prefix}/api`;
 

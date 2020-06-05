@@ -50,7 +50,7 @@ const AlbumItem = ({ album, navigation }) => {
                 />
                 <Text
                     style={{ flex: 0.1, color: 'black', fontSize: 13, paddingHorizontal: 10, fontWeight: '700', height: '100%', textAlign: 'left' }}
-                >{album.title} 
+                >{album.title}
 
                 </Text>
                 <Text

@@ -46,6 +46,7 @@ const ChangePassword = ({ changePasswordFunction, isChangingPassword, navigation
                     <TextInput
                         value={actualPassword} onChangeText={(text) => setActualPassword(text)}
                         placeholder="Ingrese su contraseña actual"
+                        secureTextEntry={true}
                         style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
                     />
                 </View>
@@ -54,6 +55,7 @@ const ChangePassword = ({ changePasswordFunction, isChangingPassword, navigation
                     <TextInput
                         value={password} onChangeText={(text) => setPassword(text)}
                         placeholder="Inngrese su nueva constraseña"
+                        secureTextEntry={true}
                         style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
                     />
                 </View>
@@ -62,6 +64,7 @@ const ChangePassword = ({ changePasswordFunction, isChangingPassword, navigation
                     <TextInput
                         value={passwordConfirm} onChangeText={(text) => setPasswordConfirm(text)}
                         placeholder="Confirme su contraseña"
+                        secureTextEntry={true}
                         style={{ marginTop: 8, fontSize: 18, borderColor: 'gray', borderWidth: 1 }}
                     />
                 </View>

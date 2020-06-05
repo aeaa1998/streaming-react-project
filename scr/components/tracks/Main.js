@@ -63,7 +63,7 @@ const SongItem = ({ song, navigation }) => {
                 borderRadius: 5,
             }}
             onPress={() => {
-                navigation.navigate('Tracks.Detail'
+                navigation.push('Tracks.Detail'
                     , {
                         trackId: song.id,
                     });

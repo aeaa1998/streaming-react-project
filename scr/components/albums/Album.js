@@ -15,14 +15,15 @@ import * as selectors from '../../reducers'
 import { useHeaderHeight } from '@react-navigation/stack';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 
+
 const bg = 'rgb(40, 42, 54)'
 
 
 const TrackItem = ({ track, navigation, album }) => {
-    
+
     const hasExplicitLyrics = (track) => {
-        if(track.explicit_lyrics ===1) {
-            return "Explicit Lyrics" 
+        if (track.explicit_lyrics === 1) {
+            return "Explicit Lyrics"
         }
         else {
             return ""
@@ -32,10 +33,11 @@ const TrackItem = ({ track, navigation, album }) => {
         underlayColor='rgba(52, 52, 52, 0.2)'
         style={{ paddingHorizontal: 5, height: 60, paddingVertical: 5, flexDirection: 'row', borderBottomWidth: 0.3 }}
         onPress={() => {
-            navigation.navigate('Tracks.Detail'
-                , {
+            navigation.push('Track.Detail',
+                {
                     trackId: track.id,
-                });
+                },
+            );
         }}
     >
         <>
@@ -48,7 +50,7 @@ const TrackItem = ({ track, navigation, album }) => {
             />
             <View style={{ flex: 0.8 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{track.name}</Text>
-                <Text style = {{fontSize : 12 ,color: "crimson" , fontWeight: 'bold'}}> {hasExplicitLyrics(track)} </Text>
+                <Text style={{ fontSize: 12, color: "crimson", fontWeight: 'bold' }}> {hasExplicitLyrics(track)} </Text>
             </View>
         </>
     </TouchableHighlight>);
@@ -58,26 +60,26 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
     const { width, height } = Dimensions.get('window')
     const [loading, setLoading] = useState(true)
     const fetchCorrect = () => !_.isEqual(selectedAlbum, {})
-    const isFavorite = (selectedAlbum) => props.favoriteAlbums.some(favoriteTrack => favoriteTrack.id === selectedAlbum.id)
+    const isFavorite = (selectedAlbum) => props.favoriteAlbums.some(favorite => favorite.album.id === selectedAlbum.id)
     const headerHeight = useHeaderHeight();
     useEffect(() => {
         props.fetchAlbum()
         setLoading(false)
     }, [])
-    const additionalInfo =()=>{
-        if(selectedAlbum.price || selectedAlbum.created_at){
-            return `Price : Q ${selectedAlbum.price.toFixed(2)} \n Published on : ${moment(selectedAlbum.created_at).locale('es').format('lll')}`
+    const additionalInfo = () => {
+        if (selectedAlbum.price || selectedAlbum.created_at) {
+            return `Price : Q ${selectedAlbum.price.toFixed(2)} \n Publicado on : ${moment(selectedAlbum.created_at).locale('es').format('lll')}`
 
         }
-        else 
+        else
             return ""
-        
+
     }
     return (
         <BaseLoaderView
             fetchCorrectly={fetchCorrect()}
             isLoading={isLoading || loading}
-            style={{ backgroundColor: bg, minHeight: '100%', paddingTop: useHeaderHeight()}}
+            style={{ backgroundColor: bg, minHeight: '100%', paddingTop: useHeaderHeight() }}
             childrenView={() =>
                 (<ImageBackground
                     source={require('../../assets/images/gradientbg.png')}
@@ -87,9 +89,10 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
                     }}>
                     <FlatList
                         ListHeaderComponent={() => (
-                            <>
+                            <View
+                                style={{ minHeight: (height - headerHeight - 80) }}>
                                 <View
-                                // style={{ minHeight: (height - headerHeight) }}
+
                                 >
                                     <View style={{
                                         justifyContent: 'center',
@@ -109,13 +112,10 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
                                     </View>
                                     <View style={{ marginTop: 25, flexDirection: 'column' }}>
                                         <Text style={{ color: 'white', flex: 1, fontSize: 20, fontWeight: '600', textAlign: 'center' }}>
-                                            {selectedAlbum.title} 
+                                            {selectedAlbum.title}
                                         </Text>
                                         <Text style={{ color: 'white', flex: 1, fontSize: 15, fontWeight: '600', textAlign: 'center' }}>
-                                           by : {selectedAlbum.artist.name} 
-                                        </Text>
-                                        <Text style={{ color: 'gray', fontSize: 12, textAlign: 'center' }}>
-                                        {additionalInfo()}
+                                            by : {selectedAlbum.artist.name}
                                         </Text>
                                     </View>
                                     <View style={{ height: 30, marginVertical: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -134,6 +134,9 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
                                                 } />
                                         </TouchableHighlight>
                                     </View>
+                                    <Text style={{ color: 'black', fontSize: 18, textAlign: 'center', paddingHorizontal: 80 }}>
+                                        {additionalInfo()}
+                                    </Text>
                                 </View>
                                 <View style={{ padding: 20 }}>
                                     <Text style={{ color: 'white', fontSize: 18, fontWeight: '600', textAlign: 'center' }}>
@@ -141,7 +144,7 @@ const Album = ({ selectedAlbum, navigation, isLoading, route, ...props }) => {
                         </Text>
                                 </View>
 
-                            </>
+                            </View>
                         )}
                         ListEmptyComponent={() => <Text
                             style={{ width: width - 40, marginVertical: 10, paddingHorizontal: 20, fontSize: 18, color: 'white' }}>
@@ -176,6 +179,7 @@ const mapDispatchToProps = (dispatch, { route, ...props }) => ({
     addFavoriteAlbum: () => {
         const { albumId } = route.params;
         const type = 'AlbumFavorite'
+
         dispatch(favoriteActions.startAddFavorites({ resourcetype: type, album: albumId }))
     },
     deleteFavoriteAlbum: (favoriteAlbums) => {

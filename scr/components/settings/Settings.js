@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as actions from '../../actions/auth'
+import * as favoriteActions from '../../actions/favorites'
 import * as selectors from '../../reducers';
 import { connect } from 'react-redux';
 import { decisionDialog } from '../../components/utils/Alerts'
@@ -77,7 +78,10 @@ function SettingsItem({ item, navigation, ...props }) {
         </TouchableOpacity>
     );
 }
-const Settings = ({ rootNavigator, navigation, logout }) => {
+const Settings = ({ rootNavigator, navigation, logout, fetchFavorites }) => {
+    useEffect(() => {
+        fetchFavorites()
+    }, [])
     return (
         <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
             <ImageBackground
@@ -132,5 +136,8 @@ export default connect(
         logout() {
             dispatch(actions.logout());
             // rootNavigator.navigate('Auth')
+        },
+        fetchFavorites: () => {
+            dispatch(favoriteActions.startFetchFavorites())
         },
     }))(Settings);

@@ -88,7 +88,7 @@ const SettingsStack = (props) => {
                     headerTransparent: true,
                 }}
             />
-            <Stack.Screen name="Tracks.Detail" component={Track}
+            <Stack.Screen name="Track.Detail" component={Track}
                 options={{
                     title: 'Detalle de la canción',
                 }} />
@@ -115,6 +115,7 @@ const SettingsStack = (props) => {
                     headerTransparent: true,
                 }}
             />
+
         </Stack.Navigator>
     );
 }
